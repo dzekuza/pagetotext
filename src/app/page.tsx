@@ -74,10 +74,10 @@ export default function Home() {
   useEffect(() => {
     if (!uploadId || !polling) return;
     const interval = setInterval(async () => {
-      const { data, error } = await supabase.from('uploads').select('status,keywords,summary').eq('id', uploadId).single();
+      const { data, error } = await supabase.from('uploads').select('status,keywords,summary,main_argument').eq('id', uploadId).single();
       if (error) return;
       if (data.status === 'done') {
-        setResult({ keywords: data.keywords, summary: data.summary });
+        setResult({ keywords: data.keywords, summary: data.summary, main_argument: data.main_argument });
         setPolling(false);
         clearInterval(interval);
       }
