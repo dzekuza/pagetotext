@@ -25,6 +25,12 @@ function useModalAnimation(show: boolean) {
   return { shouldRender, modalRef };
 }
 
+// Add SolanaProvider type above Home
+interface SolanaProvider {
+  isPhantom?: boolean;
+  connect: () => Promise<{ publicKey: { toString: () => string } }>;
+}
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -121,13 +127,13 @@ export default function Home() {
   // Phantom wallet connect function
   async function connectPhantomWallet() {
     if (typeof window === 'undefined') return;
-    const provider = (window as any).solana;
+    const provider = (window as unknown as { solana?: SolanaProvider }).solana;
     if (provider && provider.isPhantom) {
       try {
         const resp = await provider.connect();
         setWalletAddress(resp.publicKey.toString());
         alert('Connected wallet: ' + resp.publicKey.toString());
-      } catch (err) {
+      } catch {
         alert('Wallet connection cancelled or failed.');
       }
     } else {
@@ -190,7 +196,7 @@ export default function Home() {
         {/* Left: Headline & Features */}
         <div className="flex-1 max-w-lg text-left">
           <h1 className="text-5xl font-extrabold leading-tight mb-4 bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#FFFFFF] text-transparent bg-clip-text">Snap Anything,<br />Get the Alpha</h1>
-          <p className="text-gray-200 text-lg mb-8">Whether it's a whitepaper, tweet thread, or on-chain post, AlphaSnap lets users take a screenshot or paste text and instantly get:</p>
+          <p className="text-gray-200 text-lg mb-8">Whether it&apos;s a whitepaper, tweet thread, or on-chain post, AlphaSnap lets users take a screenshot or paste text and instantly get:</p>
           <ul className="space-y-3 mb-2">
             <li className="flex items-center bg-[#181818] rounded-xl px-6 py-3">
               <Image src="/imagess/TICK ICON.png" alt="Tick" width={28} height={28} className="mr-3" />
@@ -249,10 +255,13 @@ export default function Home() {
             {file && !uploading && (
               <div className="flex flex-col items-center mb-2">
                 {file.type.startsWith('image/') ? (
-                  <img
+                  <Image
                     src={URL.createObjectURL(file)}
                     alt="Preview"
+                    width={128}
+                    height={128}
                     className="max-h-32 rounded-lg border border-[#333] mb-1"
+                    unoptimized
                   />
                 ) : file.type === 'application/pdf' ? (
                   <div className="flex items-center gap-2 bg-[#232323] rounded-lg px-3 py-2">
@@ -344,7 +353,7 @@ export default function Home() {
             <Image src="/imagess/UPLOAD FILE.png" alt="Upload File" width={40} height={40} />
           </div>
           <div className="font-bold text-lg text-white mb-1">Upload image or pdf file</div>
-          <div className="text-gray-400 text-sm">Insert image of page's book or simply drag and drop PDF document</div>
+          <div className="text-gray-400 text-sm">Insert image of page&apos;s book or simply drag and drop PDF document</div>
         </div>
         <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-center text-center border border-[#222]">
           <div className="mb-3 flex items-center justify-center">
