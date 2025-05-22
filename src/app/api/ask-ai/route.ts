@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const data = await response.json();
     const aiMessage = data.choices?.[0]?.message?.content || 'No response from AI.';
     return NextResponse.json({ answer: aiMessage });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to contact OpenAI.' }, { status: 500 });
   }
 } 

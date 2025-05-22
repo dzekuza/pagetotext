@@ -34,11 +34,9 @@ export default function Home() {
   const [success, setSuccess] = useState<string | null>(null);
   const [uploadId, setUploadId] = useState<number | null>(null);
   const [polling, setPolling] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [explainingIndex, setExplainingIndex] = useState<number | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
-  const { shouldRender: shouldShowModal, modalRef } = useModalAnimation(showModal);
   const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

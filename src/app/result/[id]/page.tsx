@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
@@ -122,7 +122,7 @@ export default function ResultPage() {
       setKeywordExplanations(results);
     }
     fetchExplanations();
-  }, [data]);
+  }, [data, keywords]);
 
   if (error) {
     return (
