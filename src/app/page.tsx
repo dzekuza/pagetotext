@@ -7,26 +7,6 @@ import WalletConnectButton from "../../components/WalletConnectButton";
 
 const PDF_ICON = "/imagess/UPLOAD FILE.png"; // Use your PDF icon or fallback
 
-// Animation helper for modal
-function useModalAnimation(show: boolean) {
-  const [shouldRender, setShouldRender] = useState(show);
-  const modalRef = useRef(null);
-
-  useEffect(() => {
-    if (show) {
-      setShouldRender(true);
-    } else if (modalRef.current) {
-      // Wait for animation out before removing from DOM
-      const timeout = setTimeout(() => setShouldRender(false), 200);
-      return () => clearTimeout(timeout);
-    } else {
-      setShouldRender(false);
-    }
-  }, [show]);
-
-  return { shouldRender, modalRef };
-}
-
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);

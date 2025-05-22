@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
@@ -59,7 +59,7 @@ export default function ResultPage() {
       });
       const result = await res.json();
       setChatMessages((msgs) => [...msgs, {role: 'ai', text: result.answer || result.error || 'No response from AI.'}]);
-    } catch (err) {
+    } catch {
       setChatMessages((msgs) => [...msgs, {role: 'ai', text: 'Error contacting AI.'}]);
     }
     setChatLoading(false);
@@ -83,19 +83,20 @@ export default function ResultPage() {
   }, [id]);
 
   // Parse keywords
-  let keywords: string[] = [];
-  if (data) {
+  const keywords: string[] = useMemo(() => {
+    if (!data) return [];
     if (typeof data.keywords === 'string' && data.keywords.trim().startsWith('[')) {
       try {
         const parsed = JSON.parse(data.keywords);
         if (Array.isArray(parsed) && parsed.every((kw: string) => typeof kw === 'string')) {
-          keywords = parsed;
+          return parsed;
         }
       } catch {}
     } else if (Array.isArray(data.keywords)) {
-      keywords = data.keywords.filter((kw: string) => typeof kw === 'string');
+      return data.keywords.filter((kw: string) => typeof kw === 'string');
     }
-  }
+    return [];
+  }, [data]);
 
   // Fetch explanations for all keywords when keywords are available
   useEffect(() => {
