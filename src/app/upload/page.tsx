@@ -91,7 +91,7 @@ export default function UploadPage() {
       <form onSubmit={handleUpload} className="flex flex-col gap-4 w-full max-w-xs">
         <input
           type="file"
-          accept="image/*"
+          accept="image/*,application/pdf"
           onChange={handleFileChange}
           disabled={uploading}
           className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
@@ -101,7 +101,7 @@ export default function UploadPage() {
           disabled={uploading || !file}
           className="bg-blue-600 text-white rounded px-4 py-2 disabled:opacity-50"
         >
-          {uploading ? "Uploading..." : "Upload Image"}
+          {uploading ? "Uploading..." : "Upload File (Image or PDF)"}
         </button>
         {error && <div className="text-red-600 text-sm">{error}</div>}
         {success && <div className="text-green-600 text-sm">{success}</div>}
