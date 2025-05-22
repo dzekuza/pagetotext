@@ -37,7 +37,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [uploadId, setUploadId] = useState<number | null>(null);
-  const [result, setResult] = useState<{ keywords: string | null; summary: string | null; main_argument?: string | null } | null>(null);
+  const [result, setResult] = useState<{ keywords: string | string[] | null; summary: string | null; main_argument?: string | null } | null>(null);
   const [polling, setPolling] = useState(false);
   const [activeTab, setActiveTab] = useState<'summary' | 'keywords' | 'main_argument'>('summary');
   const [showModal, setShowModal] = useState(false);
@@ -112,7 +112,21 @@ export default function Home() {
       const { data, error } = await supabase.from('uploads').select('status,keywords,summary,main_argument').eq('id', uploadId).single();
       if (error) return;
       if (data.status === 'done') {
-        setResult({ keywords: data.keywords, summary: data.summary, main_argument: data.main_argument });
+        let keywords: string | string[] | null = data.keywords;
+        // If keywords is a stringified array, parse it
+        if (typeof keywords === 'string' && keywords.trim().startsWith('[')) {
+          try {
+            const parsed = JSON.parse(keywords);
+            if (Array.isArray(parsed) && parsed.every((kw) => typeof kw === 'string')) {
+              keywords = parsed as string[];
+            } else {
+              keywords = null;
+            }
+          } catch {
+            keywords = null;
+          }
+        }
+        setResult({ keywords, summary: data.summary, main_argument: data.main_argument });
         setPolling(false);
         clearInterval(interval);
       }
@@ -333,10 +347,87 @@ export default function Home() {
                     Main argument
                   </button>
                 </div>
-                <div className="w-full min-h-[60px] flex items-center justify-center text-lg text-white mb-8 px-2 text-center">
-                  {activeTab === 'summary' && (result.summary || 'N/A')}
-                  {activeTab === 'keywords' && (result.keywords || 'N/A')}
-                  {activeTab === 'main_argument' && (result.main_argument || 'N/A')}
+                {/* Sliding Tab Content */}
+                <div
+                  className="w-full min-h-[60px] flex items-center justify-center text-lg text-white mb-8 px-2 text-center overflow-hidden"
+                  style={{ position: 'relative', height: 80 }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '300%',
+                      transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)',
+                      transform:
+                        activeTab === 'summary'
+                          ? 'translateX(0%)'
+                          : activeTab === 'keywords'
+                          ? 'translateX(-33.3333%)'
+                          : 'translateX(-66.6666%)',
+                    }}
+                  >
+                    {/* Summary */}
+                    <div style={{ width: '100%', flexShrink: 0, flexGrow: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {result.summary || 'N/A'}
+                    </div>
+                    {/* Keywords */}
+                    <div style={{ width: '100%', flexShrink: 0, flexGrow: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {/* Robust keywords rendering logic */}
+                      {(() => {
+                        let keywords = result.keywords;
+                        // If keywords is a string that looks like a JSON array, parse it
+                        if (typeof keywords === 'string' && keywords.trim().startsWith('[')) {
+                          try {
+                            const parsed = JSON.parse(keywords);
+                            if (Array.isArray(parsed) && parsed.every((kw) => typeof kw === 'string')) {
+                              keywords = parsed as string[];
+                            } else {
+                              keywords = null;
+                            }
+                          } catch {
+                            keywords = null;
+                          }
+                        }
+                        if (Array.isArray(keywords)) {
+                          // Only map over string values
+                          const filtered = keywords.filter((kw): kw is string => typeof kw === 'string' && kw.trim().length > 0);
+                          if (filtered.length === 0) return 'N/A';
+                          return (
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
+                              {filtered.map((kw, i) => (
+                                <span
+                                  key={i}
+                                  style={{
+                                    background: 'linear-gradient(90deg, #232823 0%, #232823 100%)',
+                                    color: '#fff',
+                                    borderRadius: 8,
+                                    padding: '8px 18px',
+                                    fontSize: 18,
+                                    marginBottom: 8,
+                                    display: 'inline-block',
+                                  }}
+                                >
+                                  {kw}
+                                </span>
+                              ))}
+                            </div>
+                          );
+                        }
+                        if (typeof keywords === 'string') return keywords || 'N/A';
+                        // fallback: if keywords is array but not strings, join as string
+                        if (Array.isArray(keywords)) {
+                          const arr = keywords as string[];
+                          if (arr.every((kw) => typeof kw === 'string')) {
+                            return arr.join(', ');
+                          }
+                        }
+                        return 'N/A';
+                      })()}
+                    </div>
+                    {/* Main Argument */}
+                    <div style={{ width: '100%', flexShrink: 0, flexGrow: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {result.main_argument || 'N/A'}
+                    </div>
+                  </div>
                 </div>
                 <button className="w-full mt-auto bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-4 py-3 text-lg shadow hover:brightness-110 transition-all" onClick={connectPhantomWallet}>
                   Login to save results
