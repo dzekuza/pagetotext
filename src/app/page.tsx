@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import WalletConnectButton from "../../components/WalletConnectButton";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
 const PDF_ICON = "/imagess/UPLOAD FILE.png"; // Use your PDF icon or fallback
 
@@ -17,8 +16,26 @@ export default function Home() {
   const [polling, setPolling] = useState(false);
   const [explainingIndex, setExplainingIndex] = useState<number | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const uploadAreaRef = useRef<HTMLDivElement>(null);
+  const [uploadAreaSize, setUploadAreaSize] = useState({ width: 0, height: 0 });
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistSuccess, setWaitlistSuccess] = useState(false);
 
   const router = useRouter();
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      if (uploadAreaRef.current) {
+        setUploadAreaSize({
+          width: uploadAreaRef.current.offsetWidth,
+          height: uploadAreaRef.current.offsetHeight,
+        });
+      }
+    }
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
@@ -110,17 +127,16 @@ export default function Home() {
     };
   }, [explainingIndex]);
 
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaitlistSuccess(true);
+    setWaitlistEmail("");
+  };
+
   return (
     <div className="min-h-screen bg-[#111] flex flex-col justify-between p-0">
-      {/* Top-right CTA */}
-      <div className="absolute top-6 right-8 z-10 flex items-center gap-4">
-        <Link href="/">
-          <Image src="/branding/snaplogo.png" alt="Snap Logo" width={44} height={44} className="rounded-lg shadow" priority />
-        </Link>
-        <WalletConnectButton />
-      </div>
       {/* Hero Section */}
-      <div className="flex flex-col md:flex-row items-center justify-center flex-1 w-full max-w-7xl mx-auto gap-8 py-12 px-4">
+      <div className="flex flex-col md:flex-row items-center justify-center flex-1 w-full max-w-4xl mx-auto gap-8 py-12 px-4 relative z-10">
         {/* Left: Headline & Features */}
         <div className="flex-1 max-w-lg text-left">
           <h1 className="text-5xl font-extrabold leading-tight mb-4 bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#FFFFFF] text-transparent bg-clip-text">Snap Anything,<br />Get the Alpha</h1>
@@ -141,7 +157,47 @@ export default function Home() {
           </ul>
         </div>
         {/* Right: Upload Area */}
-        <div className="flex-1 max-w-md w-full bg-[#181818] rounded-2xl border border-[#222] shadow-lg flex flex-col items-center justify-center p-8 relative">
+        <div ref={uploadAreaRef} className="flex-1 max-w-md w-full bg-[#181818] rounded-2xl border border-[#222] shadow-lg flex flex-col items-center justify-center p-8 relative overflow-visible">
+          {/* Animated SVG Stroke Effect (short segment, correct border radius) */}
+          {uploadAreaSize.width > 0 && uploadAreaSize.height > 0 && (
+            <motion.svg
+              width={uploadAreaSize.width}
+              height={uploadAreaSize.height}
+              viewBox={`0 0 ${uploadAreaSize.width} ${uploadAreaSize.height}`}
+              className="absolute top-0 left-0 z-10 pointer-events-none"
+              style={{ borderRadius: 24 }}
+            >
+              <defs>
+                <linearGradient id="stroke-gradient" x1="0" y1="0" x2={uploadAreaSize.width} y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(0,255,178,0)" />
+                  <stop offset="100%" stopColor="rgb(0,255,178)" />
+                </linearGradient>
+                <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <motion.rect
+                x={1.5}
+                y={1.5}
+                width={uploadAreaSize.width - 3}
+                height={uploadAreaSize.height - 3}
+                rx={32}
+                ry={32}
+                stroke="url(#stroke-gradient)"
+                strokeWidth={3}
+                fill="none"
+                strokeLinecap="round"
+                strokeDasharray={24 + ',' + (2 * (uploadAreaSize.width + uploadAreaSize.height - 6) - 24)}
+                animate={{ strokeDashoffset: [0, -(2 * (uploadAreaSize.width + uploadAreaSize.height - 6))] }}
+                transition={{ duration: 5, ease: "linear", repeat: Infinity, repeatType: "loop" }}
+                filter="url(#glow)"
+              />
+            </motion.svg>
+          )}
           <form
             onSubmit={handleUpload}
             className="flex flex-col gap-4 w-full"
@@ -223,27 +279,63 @@ export default function Home() {
         </div>
       </div>
       {/* Bottom Feature Cards */}
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 pb-12 px-4">
-        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-center text-center border border-[#222]">
+      <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 pb-12 px-4">
+        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-start text-left border border-[#222]">
           <div className="mb-3 flex items-center justify-center">
             <Image src="/imagess/UPLOAD FILE.png" alt="Upload File" width={40} height={40} />
           </div>
-          <div className="font-bold text-lg text-white mb-1">Upload image or pdf file</div>
+          <div className="flex items-baseline gap-2 mb-1">
+            <span className="font-extrabold text-xl bg-gradient-to-r from-green-400 to-green-200 text-transparent bg-clip-text">01</span>
+            <span className="font-bold text-lg text-white">Upload image or pdf file</span>
+          </div>
           <div className="text-gray-400 text-sm">Insert image of page&apos;s book or simply drag and drop PDF document</div>
         </div>
-        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-center text-center border border-[#222]">
+        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-start text-left border border-[#222]">
           <div className="mb-3 flex items-center justify-center">
             <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={40} height={40} />
           </div>
-          <div className="font-bold text-lg text-white mb-1">Our AI will analyze it</div>
+          <div className="flex items-baseline gap-2 mb-1">
+            <span className="font-extrabold text-xl bg-gradient-to-r from-green-400 to-green-200 text-transparent bg-clip-text">02</span>
+            <span className="font-bold text-lg text-white">Our AI will analyze it</span>
+          </div>
           <div className="text-gray-400 text-sm">BookReader will take care on the document by carefully analyzing it</div>
         </div>
-        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-center text-center border border-[#222]">
+        <div className="bg-[#181818] rounded-2xl p-6 flex flex-col items-start text-left border border-[#222]">
           <div className="mb-3 flex items-center justify-center">
             <Image src="/imagess/GET RESULTS.png" alt="Get Results" width={40} height={40} />
           </div>
-          <div className="font-bold text-lg text-white mb-1">Get results</div>
+          <div className="flex items-baseline gap-2 mb-1">
+            <span className="font-extrabold text-xl bg-gradient-to-r from-green-400 to-green-200 text-transparent bg-clip-text">03</span>
+            <span className="font-bold text-lg text-white">Get results</span>
+          </div>
           <div className="text-gray-400 text-sm">Receive summary of provided document, keywords and argument of passage</div>
+        </div>
+      </div>
+      {/* Waitlist Section */}
+      <div className="w-full flex justify-center pb-16 px-4">
+        <div className="w-full max-w-4xl bg-gradient-to-r from-green-300 via-green-200 to-white rounded-2xl p-8 md:p-10 flex flex-col items-start shadow-lg">
+          <h2 className="text-3xl font-bold text-black mb-2">Get access to more features</h2>
+          <p className="text-lg text-black mb-6">Join waitlist and be notified about upcoming features</p>
+          {waitlistSuccess ? (
+            <div className="text-green-800 bg-white bg-opacity-80 rounded-lg px-4 py-3 font-semibold text-lg shadow">You have successfully joined the waitlist with your wallet address!</div>
+          ) : (
+            <form className="flex flex-col md:flex-row w-full gap-3" onSubmit={handleWaitlistSubmit}>
+              <input
+                type="text"
+                required
+                placeholder="Enter your wallet address"
+                className="flex-1 rounded-lg px-4 py-3 border border-green-200 bg-white bg-opacity-60 text-black text-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={waitlistEmail}
+                onChange={e => setWaitlistEmail(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="rounded-lg px-6 py-3 bg-white text-black font-bold text-lg border border-green-200 hover:bg-green-100 transition"
+              >
+                Join waitlist now
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
