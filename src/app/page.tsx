@@ -4,6 +4,7 @@ import { supabase } from "./supabaseClient";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import WalletConnectButton from "../../components/WalletConnectButton";
+import Link from "next/link";
 
 const PDF_ICON = "/imagess/UPLOAD FILE.png"; // Use your PDF icon or fallback
 
@@ -112,7 +113,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#111] flex flex-col justify-between p-0">
       {/* Top-right CTA */}
-      <div className="absolute top-6 right-8 z-10">
+      <div className="absolute top-6 right-8 z-10 flex items-center gap-4">
+        <Link href="/">
+          <Image src="/branding/snaplogo.png" alt="Snap Logo" width={44} height={44} className="rounded-lg shadow" priority />
+        </Link>
         <WalletConnectButton />
       </div>
       {/* Hero Section */}

@@ -14,6 +14,14 @@ interface ResultData {
   keywords: string | string[] | null;
 }
 
+// Utility: simple crypto keyword matcher
+const CRYPTO_KEYWORDS = [
+  'crypto', 'blockchain', 'defi', 'nft', 'token', 'web3', 'ethereum', 'solana', 'bitcoin', 'wallet', 'staking', 'mev', 'dep', 'restaking', 'layer', 'rollup', 'zk', 'dao', 'dapp', 'smart contract', 'airdrop', 'dex', 'cex', 'l2', 'l1', 'evm', 'bridge', 'oracle', 'stablecoin', 'yield', 'liquidity', 'validator', 'gas', 'hash', 'mining', 'consensus', 'governance', 'multisig', 'ledger', 'phishing', 'rug', 'scam', 'pump', 'dump', 'alpha', 'beta', 'gamma', 'delta', 'sigma', 'tau', 'theta', 'lambda'
+];
+function isCryptoRelated(keyword: string) {
+  return CRYPTO_KEYWORDS.some(term => keyword.toLowerCase().includes(term));
+}
+
 export default function ResultPage() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -24,46 +32,11 @@ export default function ResultPage() {
   const [chatMessages, setChatMessages] = useState<{role: 'user'|'ai', text: string}[]>([]);
   const [chatLoading, setChatLoading] = useState(false);
 
-  const predefinedQuestions = [
-    "Explain keywords",
-    "Explain main argument",
-    "Explain summary"
-  ];
-
-  const handleAskAI = useCallback(() => {
-    setShowChat(true);
-  }, []);
-
   const handleCloseChat = useCallback(() => {
     setShowChat(false);
     setChatMessages([]);
     setChatLoading(false);
   }, []);
-
-  const handleSelectQuestion = async (question: string) => {
-    setChatMessages((msgs) => [...msgs, {role: 'user', text: question}]);
-    setChatLoading(true);
-    let context = '';
-    if (question === 'Explain keywords') {
-      context = keywords.map((kw, i) => `${kw}: ${keywordExplanations[i] || ''}`).join('\n');
-    } else if (question === 'Explain main argument') {
-      context = data?.main_argument || '';
-    } else if (question === 'Explain summary') {
-      context = data?.summary || '';
-    }
-    try {
-      const res = await fetch('/api/ask-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, context }),
-      });
-      const result = await res.json();
-      setChatMessages((msgs) => [...msgs, {role: 'ai', text: result.answer || result.error || 'No response from AI.'}]);
-    } catch {
-      setChatMessages((msgs) => [...msgs, {role: 'ai', text: 'Error contacting AI.'}]);
-    }
-    setChatLoading(false);
-  };
 
   // Fetch result from Supabase on mount
   useEffect(() => {
@@ -125,6 +98,15 @@ export default function ResultPage() {
     fetchExplanations();
   }, [data, keywords]);
 
+  // Add welcome message when chat opens
+  useEffect(() => {
+    if (showChat && chatMessages.length === 0) {
+      setChatMessages([
+        { role: 'ai', text: "Welcome, do you have any questions related to received analysis?" }
+      ]);
+    }
+  }, [showChat, chatMessages.length]);
+
   if (error) {
     return (
       <div className="min-h-screen bg-[#111] flex flex-col items-center justify-center text-white">
@@ -169,7 +151,12 @@ export default function ResultPage() {
                 {keywords.length > 0 ? (
                   keywords.map((kw, i) => (
                     <span key={i} style={{ display: 'inline-block', minWidth: 120 }} className="bg-gradient-to-r from-[#232823] to-[#232823] text-white rounded px-4 py-2 text-base flex flex-col items-center">
-                      {kw}
+                      <span className="flex items-center gap-2">
+                        {kw}
+                        {isCryptoRelated(kw) && (
+                          <span className="ml-2 bg-green-900 text-green-300 px-2 py-0.5 rounded text-xs font-semibold">crypto related</span>
+                        )}
+                      </span>
                       <span className="block text-green-200 text-xs mt-2" style={{whiteSpace: 'pre-line', textAlign: 'center'}}>
                         {keywordExplanations[i] || '...'}
                       </span>
@@ -180,51 +167,90 @@ export default function ResultPage() {
                 )}
               </div>
             </div>
-            {/* Ask AI Button and Chat Window */}
-            <div className="mt-6 flex flex-col items-center">
-              <button
-                className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-6 py-2 shadow hover:from-green-300 hover:to-green-100 transition-colors"
-                onClick={handleAskAI}
-              >
-                Ask AI
-              </button>
+            {/* Floating AI Chat Bubble and Widget */}
+            <>
+              {!showChat && (
+                <div className="fixed bottom-8 right-8 z-50 flex items-center gap-4">
+                  <span className="text-white bg-[#232323] px-4 py-2 rounded-lg shadow text-base font-medium hidden md:inline-block">Ask me anything about your upload&apos;s analysis</span>
+                  <button
+                    className="bg-gradient-to-r from-green-400 to-green-200 text-black rounded-full shadow-lg w-16 h-16 flex items-center justify-center hover:scale-105 transition-transform"
+                    style={{ boxShadow: '0 4px 24px 0 rgba(0,0,0,0.25)' }}
+                    onClick={() => setShowChat(true)}
+                    aria-label="Open AI Chat"
+                  >
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="16" cy="16" r="16" fill="#95ED7F"/>
+                      <text x="16" y="22" textAnchor="middle" fontSize="20" fontWeight="bold" fill="#232823" fontFamily="inherit">?</text>
+                    </svg>
+                  </button>
+                </div>
+              )}
               {showChat && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-                  <div className="bg-[#232323] rounded-2xl shadow-lg p-6 w-full max-w-md relative flex flex-col">
+                <div className="fixed bottom-8 right-8 z-50 w-96 max-w-full bg-[#232323] rounded-2xl shadow-2xl flex flex-col" style={{ minHeight: 420 }}>
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-[#333] rounded-t-2xl bg-[#232323]">
+                    <span className="font-bold text-lg text-green-300">AI Chat</span>
                     <button
-                      className="absolute top-3 right-4 text-gray-400 hover:text-green-300 text-2xl font-bold"
+                      className="text-gray-400 hover:text-green-300 text-2xl font-bold"
                       onClick={handleCloseChat}
                       aria-label="Close chat"
                     >
                       ×
                     </button>
-                    <div className="font-bold text-lg text-green-300 mb-2">Ask AI</div>
-                    <div className="flex flex-col gap-2 mb-4">
-                      {predefinedQuestions.map((q, idx) => (
-                        <button
-                          key={idx}
-                          className="bg-[#181818] text-white rounded px-4 py-2 text-left hover:bg-green-900/30 border border-[#333]"
-                          onClick={() => handleSelectQuestion(q)}
-                          disabled={chatLoading}
-                        >
-                          {q}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="flex-1 overflow-y-auto mb-2 max-h-60">
-                      {chatMessages.map((msg, idx) => (
-                        <div key={idx} className={msg.role === 'ai' ? 'text-green-200 mb-2' : 'text-white mb-2 text-right'}>
-                          <span className="block px-2 py-1 rounded" style={{background: msg.role === 'ai' ? '#1a2e1a' : '#222'}}>{msg.text}</span>
-                        </div>
-                      ))}
-                      {chatLoading && (
-                        <div className="text-green-200 mb-2"><span className="block px-2 py-1 rounded bg-[#1a2e1a]">AI is typing...</span></div>
-                      )}
-                    </div>
                   </div>
+                  <div className="flex-1 overflow-y-auto px-4 py-2" style={{ maxHeight: 300 }}>
+                    {chatMessages.map((msg, idx) => (
+                      <div key={idx} className={msg.role === 'ai' ? 'text-green-200 mb-2' : 'text-white mb-2 text-right'}>
+                        <span className="block px-2 py-1 rounded" style={{background: msg.role === 'ai' ? '#1a2e1a' : '#222'}}>{msg.text}</span>
+                      </div>
+                    ))}
+                    {chatLoading && (
+                      <div className="text-green-200 mb-2"><span className="block px-2 py-1 rounded bg-[#1a2e1a]">AI is typing...</span></div>
+                    )}
+                  </div>
+                  <form
+                    className="flex items-center gap-2 border-t border-[#333] px-4 py-3 bg-[#232323] rounded-b-2xl"
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const input = form.elements.namedItem('userInput') as HTMLInputElement;
+                      const userInput = input.value.trim();
+                      if (!userInput) return;
+                      setChatMessages((msgs) => [...msgs, { role: 'user', text: userInput }]);
+                      setChatLoading(true);
+                      input.value = '';
+                      try {
+                        const res = await fetch('/api/ask-ai', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ question: userInput, context: `${data.summary || ''}\n${data.main_argument || ''}\n${keywords.join(', ')}` }),
+                        });
+                        const result = await res.json();
+                        setChatMessages((msgs) => [...msgs, { role: 'ai', text: result.answer || result.error || 'No response from AI.' }]);
+                      } catch {
+                        setChatMessages((msgs) => [...msgs, { role: 'ai', text: 'Error contacting AI.' }]);
+                      }
+                      setChatLoading(false);
+                    }}
+                  >
+                    <input
+                      name="userInput"
+                      type="text"
+                      className="flex-1 rounded-lg bg-[#181818] text-white px-3 py-2 border border-[#333] focus:outline-none focus:ring-2 focus:ring-green-400"
+                      placeholder="Ask anything about these results..."
+                      autoComplete="off"
+                      disabled={chatLoading}
+                    />
+                    <button
+                      type="submit"
+                      className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-4 py-2 disabled:opacity-50"
+                      disabled={chatLoading}
+                    >
+                      Send
+                    </button>
+                  </form>
                 </div>
               )}
-            </div>
+            </>
           </div>
         </div>
       </div>
