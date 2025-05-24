@@ -135,31 +135,48 @@ export default function ResultPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#111] flex flex-col p-0">
+    <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-6xl mx-auto mt-16 mb-8 px-4">
         <Link href="/" className="text-gray-300 hover:text-green-300 text-lg mb-6 inline-block">Back</Link>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left: Your upload card */}
-          <div className="bg-[#181818] rounded-2xl border border-[#222] shadow-lg p-8 flex flex-col items-center min-h-[480px]">
+          <div
+            className="bg-[#181818] rounded-2xl border border-[#222] shadow-lg p-8 flex flex-col items-center"
+            style={{ height: 'fit-content' }}
+          >
             <div className="w-full mb-6">
               <div className="text-green-300 font-extrabold text-2xl mb-4">Your upload</div>
               {data?.image_url ? (
-                <Image
-                  src={data.image_url.startsWith('http') ? data.image_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${data.image_url}`}
-                  alt="Uploaded Preview"
-                  width={320}
-                  height={320}
-                  className="rounded-xl border border-[#333] max-h-80 object-contain bg-black w-full"
-                />
+                data.image_url.endsWith('.pdf') ? (
+                  <iframe
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${data.image_url}`}
+                    title="PDF Preview"
+                    className="w-full max-w-md aspect-[4/5] rounded-lg border border-[#333] bg-white"
+                    style={{ minHeight: 400 }}
+                  />
+                ) : (
+                  <Image
+                    src={
+                      data.image_url.startsWith('http')
+                        ? data.image_url
+                        : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${data.image_url}`
+                    }
+                    alt="Uploaded Preview"
+                    width={320}
+                    height={320}
+                    className="rounded-xl border border-[#333] object-contain bg-black w-full max-w-md"
+                    unoptimized
+                  />
+                )
               ) : (
-                <div className="flex flex-col items-center justify-center w-full h-80 bg-[#232323] rounded-xl border border-[#333]">
+                <div className="flex flex-col items-center justify-center w-full bg-[#232323] rounded-xl border border-[#333] p-6">
                   <Image src="/imagess/UPLOAD FILE.png" alt="No Preview" width={64} height={64} />
                   <span className="text-gray-400 mt-2">No preview available</span>
                 </div>
               )}
             </div>
             <button
-              className="w-full mt-auto bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-6 py-3 shadow hover:brightness-110 transition-all text-lg"
+              className="w-full bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-6 py-3 shadow hover:brightness-110 transition-all text-lg"
               onClick={() => setShowUploadModal(true)}
             >
               Generate another analysis

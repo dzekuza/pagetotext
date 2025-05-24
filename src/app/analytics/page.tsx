@@ -31,7 +31,7 @@ export default function AnalyticsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#111] flex flex-col p-0">
+    <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-7xl mx-auto mt-12 mb-8 px-4">
         <div className="text-green-300 font-extrabold text-2xl mb-8">Analytics history</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
