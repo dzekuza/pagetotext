@@ -147,7 +147,15 @@ export default function Home() {
     <div className="min-h-screen bg-[#111] flex flex-col justify-between p-0">
       <div className="w-full max-w-[1420px] mx-auto px-16">
         {/* Hero Section */}
-        <div className="flex flex-col md:flex-row items-center justify-center flex-1 w-full gap-8 py-12 relative z-10 px-4 md:px-0">
+        <div
+          className="flex flex-col md:flex-row items-center justify-center flex-1 w-full gap-8 py-12 relative z-10 px-4 md:px-0"
+          style={{
+            backgroundImage: 'url(/branding/1stbg.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
           {/* Left: Headline & Features */}
           <div className="flex-1 max-w-lg text-left">
             <h1 className="text-5xl font-extrabold leading-tight mb-4 bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#FFFFFF] text-transparent bg-clip-text">Snap Anything,<br />Get the Alpha</h1>
@@ -196,8 +204,8 @@ export default function Home() {
                   y={1.5}
                   width={uploadAreaSize.width - 3}
                   height={uploadAreaSize.height - 3}
-                  rx={32}
-                  ry={32}
+                  rx={24}
+                  ry={24}
                   stroke="url(#stroke-gradient)"
                   strokeWidth={3}
                   fill="none"
