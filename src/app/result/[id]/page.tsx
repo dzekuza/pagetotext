@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -39,6 +40,7 @@ export default function ResultPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
   const router = useRouter();
+  const { publicKey, connected } = useWallet();
 
   const handleCloseChat = useCallback(() => {
     setShowChat(false);
@@ -235,14 +237,12 @@ export default function ResultPage() {
             <div className="fixed bottom-8 right-8 z-50 flex items-center gap-4">
               <span className="text-white bg-[#232323] px-4 py-2 rounded-lg shadow text-base font-medium hidden md:inline-block">Ask me anything about your upload&apos;s analysis</span>
               <button
-                className="bg-gradient-to-r from-green-400 to-green-200 text-black rounded-full shadow-lg w-16 h-16 flex items-center justify-center hover:scale-105 transition-transform"
-                style={{ boxShadow: '0 4px 24px 0 rgba(0,0,0,0.25)' }}
+                className="w-16 h-16 flex items-center justify-center hover:scale-105 transition-transform bg-transparent shadow-none p-0"
                 onClick={() => setShowChat(true)}
                 aria-label="Open AI Chat"
               >
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="16" cy="16" r="16" fill="#95ED7F"/>
-                  <text x="16" y="22" textAnchor="middle" fontSize="20" fontWeight="bold" fill="#232823" fontFamily="inherit">?</text>
+                  <text x="16" y="22" textAnchor="middle" fontSize="28" fontWeight="bold" fill="#95ED7F" fontFamily="inherit">?</text>
                 </svg>
               </button>
             </div>
@@ -348,11 +348,17 @@ export default function ResultPage() {
                   setUploading(false);
                   return;
                 }
+                if (!connected || !publicKey) {
+                  setUploadError("Please connect your wallet to upload.");
+                  setUploading(false);
+                  return;
+                }
                 // Insert DB record for n8n automation
                 const { data: insertData, error: dbError } = await supabase.from('uploads').insert([
                   {
                     image_url: data?.path,
                     status: 'pending',
+                    wallet: publicKey.toBase58(),
                   },
                 ]).select('id');
                 if (dbError) {

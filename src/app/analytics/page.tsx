@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { supabase } from "../supabaseClient";
 import Link from "next/link";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Upload {
   id: number;
@@ -13,13 +14,19 @@ interface Upload {
 }
 
 export default function AnalyticsPage() {
+  const { publicKey, connected } = useWallet();
   const [uploads, setUploads] = useState<Upload[]>([]);
 
   useEffect(() => {
+    if (!connected || !publicKey) {
+      setUploads([]);
+      return;
+    }
     async function fetchUploads() {
       const { data, error } = await supabase
         .from("uploads")
         .select("id, summary, keywords, created_at, image_url")
+        .eq("wallet", publicKey.toBase58())
         .order("created_at", { ascending: false });
       if (error) {
         setUploads([]);
@@ -28,8 +35,17 @@ export default function AnalyticsPage() {
       }
     }
     fetchUploads();
-  }, []);
+  }, [connected, publicKey]);
 
+  if (!connected || !publicKey) {
+    return (
+      <div className="min-h-screen bg-[#111] flex flex-col items-center justify-center p-0 px-4 md:px-16">
+        <div className="bg-[#181818] rounded-2xl p-8 text-center">
+          <h2 className="text-2xl font-bold mb-4 text-green-300">Connect your wallet to view your analytics history</h2>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-7xl mx-auto mt-12 mb-8 px-4">
