@@ -1,39 +1,14 @@
 "use client";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabaseClient";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import UploadComponent from "./upload/UploadComponent";
 
 export default function Home() {
-  const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [uploadId, setUploadId] = useState<number | null>(null);
-  const [polling, setPolling] = useState(false);
   const [explainingIndex, setExplainingIndex] = useState<number | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const uploadAreaRef = useRef<HTMLDivElement>(null);
-  const [uploadAreaSize, setUploadAreaSize] = useState({ width: 0, height: 0 });
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
-
-  const router = useRouter();
-
-  useLayoutEffect(() => {
-    function updateSize() {
-      if (uploadAreaRef.current) {
-        setUploadAreaSize({
-          width: uploadAreaRef.current.offsetWidth,
-          height: uploadAreaRef.current.offsetHeight,
-        });
-      }
-    }
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -107,7 +82,7 @@ export default function Home() {
         </div>
         {/* New Coming Soon Features Section */}
         <section className="w-full max-w-6xl mx-auto my-12 px-4">
-          <div className="flex flex-col gap-10"s
+          <div className="flex flex-col gap-10">
             {/* Row 1 */}
             <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center" style={{background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)'}}>
               {/* Left: Text */}
@@ -132,7 +107,7 @@ export default function Home() {
               {/* Right: Image */}
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <img src="/imagess/narrative.png" alt="Narrative Tracker Illustration" className="object-contain" />
+                  <Image src="/imagess/narrative.png" alt="Narrative Tracker Illustration" width={400} height={300} className="object-contain" />
                 </div>
               </div>
             </div>
@@ -164,7 +139,7 @@ export default function Home() {
               {/* Right: Image */}
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <img src="/imagess/defi flow.png" alt="DeFi Flow Illustration" className="object-contain" />
+                  <Image src="/imagess/defi flow.png" alt="DeFi Flow Illustration" width={400} height={300} className="object-contain" />
                 </div>
               </div>
             </div>
@@ -196,7 +171,7 @@ export default function Home() {
               {/* Right: Image */}
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <img src="/imagess/smart cont.png" alt="Smart Contract Illustration" className="object-contain" />
+                  <Image src="/imagess/smart cont.png" alt="Smart Contract Illustration" width={400} height={300} className="object-contain" />
                 </div>
               </div>
             </div>

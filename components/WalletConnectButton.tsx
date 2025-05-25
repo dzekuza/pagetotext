@@ -5,12 +5,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 const WALLET_ICONS: Record<string, string> = {
-  Phantom: "/branding/phantom.svg",
-  Metamask: "/branding/metamask.svg",
-  Solflare: "/branding/solflare.svg",
+  WalletConnect: "/branding/walletconnect.svg",
   Torus: "/branding/torus.svg",
-  Ledger: "/branding/ledger.svg",
-  // Add more as needed
+  Solflare: "/branding/App-Icon.svg",
+  Phantom: "/branding/Phantomwallet.svg",
+  Metamask: "/branding/MetaMask.png",
+  Ledger: "/branding/Ledger-logo-696.png",  // Add more as needed
 };
 
 export default function WalletConnectButton() {

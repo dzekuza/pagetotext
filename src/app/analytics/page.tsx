@@ -26,7 +26,7 @@ export default function AnalyticsPage() {
       const { data, error } = await supabase
         .from("uploads")
         .select("id, summary, keywords, created_at, image_url")
-        .eq("wallet", publicKey.toBase58())
+        .eq("wallet", publicKey?.toBase58())
         .order("created_at", { ascending: false });
       if (error) {
         setUploads([]);

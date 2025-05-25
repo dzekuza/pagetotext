@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
+import Image from "next/image";
 
 interface UploadComponentProps {
   standalone?: boolean;
@@ -213,7 +214,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
           >
             <div className="flex flex-col items-center justify-center space-y-3">
               <div className="p-3 rounded-full bg-[#232323] flex items-center justify-center">
-                <img src="/imagess/UPLOAD FILE.png" alt="Upload file icon" className="h-12 w-12 object-contain" />
+                <Image src="/imagess/UPLOAD FILE.png" alt="Upload file icon" width={48} height={48} className="h-12 w-12 object-contain" />
               </div>
               <div className="text-lg font-semibold text-green-300">Choose a file or drag & drop it here</div>
               <div className="text-xs text-gray-400">JPEG, PNG, PDF, and MP4 formats, up to 50MB</div>
