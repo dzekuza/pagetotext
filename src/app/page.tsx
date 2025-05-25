@@ -145,13 +145,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#111] flex flex-col justify-between p-0">
-      <div className="w-full max-w-[1420px] mx-auto px-16">
+      <div className="w-full max-w-[1420px] mx-auto px-0 md:px-16">
         {/* Hero Section */}
         <div
           className="flex flex-col md:flex-row items-center justify-center flex-1 w-full gap-8 py-12 relative z-10 px-4 md:px-0"
           style={{
             backgroundImage: 'url(/branding/1stbg.png)',
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
           }}
@@ -380,13 +380,19 @@ export default function Home() {
         </div>
         {/* Waitlist Section */}
         <div className="w-full flex justify-center pb-16 px-4 md:px-0">
-          <div className="w-full bg-gradient-to-r from-green-300 via-green-200 to-white rounded-2xl p-8 md:p-10 flex flex-col items-start shadow-lg">
-            <h2 className="text-3xl font-bold text-black mb-2">Get access to more features</h2>
-            <p className="text-lg text-black mb-6">Join waitlist and be notified about upcoming features</p>
+          <div
+            className="w-full rounded-2xl p-8 md:p-10 flex flex-col items-start shadow-lg"
+            style={{
+              background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)',
+              color: '#111',
+            }}
+          >
+            <h2 className="text-3xl font-bold text-black mb-2" style={{color: '#FFF'}}>Get access to more features</h2>
+            <p className="text-lg text-black mb-6" style={{color: '#fff'}}>Join waitlist and be notified about upcoming features</p>
             {waitlistSuccess ? (
-              <div className="text-green-800 bg-white bg-opacity-80 rounded-lg px-4 py-3 font-semibold text-lg shadow">You have successfully joined the waitlist with your wallet address!</div>
+              <div className="text-green-800 bg-white bg-opacity-80 rounded-lg px-4 py-3 font-semibold text-lg shadow" style={{color: '#111'}}>You have successfully joined the waitlist with your wallet address!</div>
             ) : (
-              <form className="flex flex-col md:flex-row w-full gap-3" onSubmit={handleWaitlistSubmit}>
+              <form className="flex flex-col md:flex-row w-full gap-3" onSubmit={handleWaitlistSubmit} style={{color: '#111'}}>
                 <input
                   type="text"
                   required
@@ -394,10 +400,12 @@ export default function Home() {
                   className="flex-1 rounded-lg px-4 py-3 border border-green-200 bg-white bg-opacity-60 text-black text-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                   value={waitlistEmail}
                   onChange={e => setWaitlistEmail(e.target.value)}
+                  style={{color: '#111'}}
                 />
                 <button
                   type="submit"
                   className="rounded-lg px-6 py-3 bg-white text-black font-bold text-lg border border-green-200 hover:bg-green-100 transition"
+                  style={{color: '#111'}}
                 >
                   Join waitlist now
                 </button>

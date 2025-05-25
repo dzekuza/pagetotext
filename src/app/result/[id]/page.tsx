@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -38,6 +38,7 @@ export default function ResultPage() {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleCloseChat = useCallback(() => {
     setShowChat(false);
@@ -137,7 +138,13 @@ export default function ResultPage() {
   return (
     <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-6xl mx-auto mt-16 mb-8 px-4">
-        <Link href="/" className="text-gray-300 hover:text-green-300 text-lg mb-6 inline-block">Back</Link>
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="text-gray-300 hover:text-green-300 text-lg mb-6 inline-block"
+        >
+          Back
+        </button>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left: Your upload card */}
           <div
@@ -201,9 +208,9 @@ export default function ResultPage() {
               <div className="flex flex-col gap-4">
                 {keywords.length > 0 ? (
                   keywords.map((kw, i) => (
-                    <div key={i} className="bg-gradient-to-r from-[#232823] to-[#232823] rounded-xl p-4 flex flex-col gap-2">
+                    <div key={i} className="bg-[#232323] rounded-xl p-4 flex flex-col gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-full px-4 py-1 text-base">
+                        <span className="font-bold rounded-full text-base text-white">
                           {kw}
                         </span>
                         {isCryptoRelated(kw) && (
