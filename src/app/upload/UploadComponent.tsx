@@ -31,7 +31,6 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
   const [uploadId, setUploadId] = useState<number | null>(null);
   const [polling, setPolling] = useState(false);
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { publicKey, connected } = useWallet();
 
   const handleFileSelect = (selectedFiles: File[]) => {
@@ -91,16 +90,6 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
 
   const handleCancel = (fileId: string) => {
     setFiles((prev) => prev.filter((file) => file.id !== fileId));
-  };
-
-  const handleCancelAll = () => {
-    setFiles([]);
-  };
-
-  const handleUploadAll = () => {
-    setFiles((prev) =>
-      prev.map((file) => ({ ...file, progress: 100, status: "uploaded" }))
-    );
   };
 
   // Drag and drop handlers
