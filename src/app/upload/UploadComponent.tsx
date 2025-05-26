@@ -32,7 +32,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
   const [uploadId, setUploadId] = useState<number | null>(null);
   const [polling, setPolling] = useState(false);
   const router = useRouter();
-  const { publicKey, connected } = useWallet();
+  const { publicKey } = useWallet();
 
   const handleFileSelect = (selectedFiles: File[]) => {
     const newFiles = selectedFiles.map((file) => ({
@@ -120,10 +120,6 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
     setError(null);
     setSuccess(null);
     setUploadId(null);
-    if (!connected || !publicKey) {
-      setError("Please connect your wallet to upload.");
-      return;
-    }
     if (files.length === 0) {
       setError("Please select a file.");
       return;
@@ -150,7 +146,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
       {
         image_url: data?.path,
         status: 'pending',
-        wallet: publicKey.toBase58(),
+        wallet: publicKey?.toBase58() || "",
       },
     ]).select('id');
     if (dbError) {
@@ -217,7 +213,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
                 <Image src="/imagess/UPLOAD FILE.png" alt="Upload file icon" width={48} height={48} className="h-12 w-12 object-contain" />
               </div>
               <div className="text-lg font-semibold text-green-300">Choose a file or drag & drop it here</div>
-              <div className="text-xs text-gray-400">JPEG, PNG, PDF, and MP4 formats, up to 50MB</div>
+              <div className="text-xs text-gray-400">JPEG, PNG, and PDF formats, up to 10MB</div>
               <input type="file" multiple className="hidden" onChange={handleInputChange} />
               <button
                 type="button"
@@ -250,7 +246,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
               {files.map(file => (
                 <div key={file.id} className="flex items-center bg-[#232323] rounded-lg px-4 py-3">
                   <div className="flex-1">
-                    <div className="font-semibold text-white truncate">{file.name}</div>
+                    <div className="font-semibold text-white truncate max-w-[260px]" title={file.name}>{file.name}</div>
                     <div className="text-xs text-gray-400">{file.size ? `${(file.size / 1024).toFixed(0)} KB` : "URL"} • {file.status === "uploading" ? "Uploading..." : file.status === "uploaded" ? "Uploaded" : "Error"}</div>
                     <div className="w-full bg-[#333] rounded h-1 mt-1">
                       <div
@@ -282,13 +278,17 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
             <button
               className="w-full bg-gradient-to-r from-green-400 to-green-200 hover:brightness-110 text-black border-0 rounded-lg font-bold flex items-center justify-center gap-1 py-3"
               type="submit"
-              disabled={uploading || files.length === 0}
+              disabled={uploading || !files.some(file => file.status === "uploaded")}
             >
-              {uploading ? "Uploading..." : polling ? "Processing... Please wait." : "Upload File"}
+              {uploading ? "Uploading..." : polling ? "Processing... Please wait." : "Analyze"}
             </button>
           </div>
         </form>
-        {error && <div className="text-red-400 text-sm">{error}</div>}
+        {error && (
+          <div className="bg-red-500 bg-opacity-20 text-red-400 text-sm rounded-lg px-4 py-3 mt-2 font-semibold border border-red-400">
+            {error}
+          </div>
+        )}
         {success && <div className="text-green-400 text-sm">{success}</div>}
       </div>
     </div>

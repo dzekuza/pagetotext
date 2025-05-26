@@ -237,13 +237,15 @@ export default function ResultPage() {
             <div className="fixed bottom-8 right-8 z-50 flex items-center gap-4">
               <span className="text-white bg-[#232323] px-4 py-2 rounded-lg shadow text-base font-medium hidden md:inline-block">Ask me anything about your upload&apos;s analysis</span>
               <button
-                className="w-16 h-16 flex items-center justify-center hover:scale-105 transition-transform bg-transparent shadow-none p-0"
+                className="w-16 h-16 flex items-center justify-center hover:scale-105 transition-transform bg-transparent shadow-none p-0 animate-pulse-grow"
                 onClick={() => setShowChat(true)}
                 aria-label="Open AI Chat"
               >
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <text x="16" y="22" textAnchor="middle" fontSize="28" fontWeight="bold" fill="#95ED7F" fontFamily="inherit">?</text>
-                </svg>
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-[#A8FF78] via-[#7DDA7D] to-[#95ED7F]">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="block" style={{ display: 'block' }}>
+                    <text x="16" y="24" textAnchor="middle" fontSize="28" fontWeight="bold" fill="#fff" fontFamily="inherit">?</text>
+                  </svg>
+                </div>
               </button>
             </div>
           )}

@@ -80,11 +80,52 @@ export default function Home() {
             <UploadComponent standalone={false} />
           </div>
         </div>
-        {/* New Coming Soon Features Section */}
+        {/* Features Section (screenshot style) */}
         <section className="w-full max-w-6xl mx-auto my-12 px-4">
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
+            {/* Step 1 */}
+            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+              <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
+              <div className="flex items-baseline mb-2">
+                <span className="text-green-300 text-xl font-bold mr-2">01</span>
+                <span className="text-white text-xl font-bold">Upload image or pdf file</span>
+              </div>
+              <p className="text-gray-300">Insert image of page&apos;s book or simply drag and drop PDF document</p>
+            </div>
+            {/* Step 2 */}
+            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+              <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
+              <div className="flex items-baseline mb-2">
+                <span className="text-green-300 text-xl font-bold mr-2">02</span>
+                <span className="text-white text-xl font-bold">Our AI will analyze it</span>
+              </div>
+              <p className="text-gray-300">BookReader will take care on the document by carefully analyzing it</p>
+            </div>
+            {/* Step 3 */}
+            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+              <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
+              <div className="flex items-baseline mb-2">
+                <span className="text-green-300 text-xl font-bold mr-2">03</span>
+                <span className="text-white text-xl font-bold">Get results</span>
+              </div>
+              <p className="text-gray-300">Receive summary of provided document, keywords and argument of passage</p>
+            </div>
+            {/* Step 4 */}
+            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+              <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
+              <div className="flex items-baseline mb-2">
+                <span className="text-green-300 text-xl font-bold mr-2">04</span>
+                <span className="text-white text-xl font-bold">Ask AI</span>
+              </div>
+              <p className="text-gray-300">Still need more explanations? Ask chat widget powered by AI for better explanation</p>
+            </div>
+          </div>
+        </section>
+        {/* Coming Soon Features Section (side-scroll, reverted) */}
+        <section className="w-full max-w-6xl mx-auto my-12 px-4">
+          <div className="flex space-x-8 overflow-x-auto pb-4 hide-scrollbar">
             {/* Row 1 */}
-            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center" style={{background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)'}}>
+            <div className="min-w-[700px] rounded-3xl p-8 md:p-12 flex flex-row gap-12 items-center bg-[#181818]">
               {/* Left: Text */}
               <div className="flex-1 flex flex-col gap-8 max-w-xl">
                 <div className="flex flex-col gap-2">
@@ -104,15 +145,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              {/* Right: Image */}
-              <div className="flex-1 flex items-center justify-center">
-                <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <Image src="/imagess/narrative.png" alt="Narrative Tracker Illustration" width={400} height={300} className="object-contain" />
-                </div>
-              </div>
             </div>
             {/* Row 2 */}
-            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row-reverse gap-12 items-center" style={{background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)'}}>
+            <div className="min-w-[700px] rounded-3xl p-8 md:p-12 flex flex-row-reverse gap-12 items-center bg-[#181818]">
               {/* Left: Text */}
               <div className="flex-1 flex flex-col gap-8 max-w-xl">
                 <div className="flex flex-col gap-2">
@@ -136,15 +171,9 @@ export default function Home() {
                   <div className="text-sm text-gray-800">Useful for newer degens trying out a yield farm or bridging to Layer 2s.</div>
                 </div>
               </div>
-              {/* Right: Image */}
-              <div className="flex-1 flex items-center justify-center">
-                <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <Image src="/imagess/defi flow.png" alt="DeFi Flow Illustration" width={400} height={300} className="object-contain" />
-                </div>
-              </div>
             </div>
             {/* Row 3 */}
-            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center" style={{background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)'}}>
+            <div className="min-w-[700px] rounded-3xl p-8 md:p-12 flex flex-row gap-12 items-center bg-[#181818]">
               {/* Left: Text */}
               <div className="flex-1 flex flex-col gap-8 max-w-xl">
                 <div className="flex flex-col gap-2">
@@ -168,48 +197,57 @@ export default function Home() {
                   <div className="text-sm text-gray-800">Devs and non-devs alike can understand smart contract intent & risk.</div>
                 </div>
               </div>
-              {/* Right: Image */}
-              <div className="flex-1 flex items-center justify-center">
-                <div className="w-full h-64 md:h-80 flex items-center justify-center">
-                  <Image src="/imagess/smart cont.png" alt="Smart Contract Illustration" width={400} height={300} className="object-contain" />
-                </div>
-              </div>
             </div>
           </div>
         </section>
         {/* Waitlist Section */}
         <div className="w-full flex justify-center pb-16 px-4 md:px-0">
           <div
-            className="w-full rounded-2xl p-8 md:p-10 flex flex-col items-start shadow-lg"
-            style={{
-              background: 'linear-gradient(90deg, #136B0A 0%, #7DDA7D 43%, #058B05 100%)',
-              color: '#111',
-            }}
+            className="w-full max-w-[1356px] rounded-3xl p-0 flex flex-col md:flex-row items-stretch shadow-lg bg-[#0F0F0F] relative" style={{ borderRadius: '24px', color: '#FFF', minHeight: 320 }}
           >
-            <h2 className="text-3xl font-bold text-black mb-2" style={{color: '#FFF'}}>Get access to more features</h2>
-            <p className="text-lg text-black mb-6" style={{color: '#fff'}}>Join waitlist and be notified about upcoming features</p>
-            {waitlistSuccess ? (
-              <div className="text-green-800 bg-white bg-opacity-80 rounded-lg px-4 py-3 font-semibold text-lg shadow" style={{color: '#111'}}>You have successfully joined the waitlist with your wallet address!</div>
-            ) : (
-              <form className="flex flex-col md:flex-row w-full gap-3" onSubmit={handleWaitlistSubmit} style={{color: '#111'}}>
-                <input
-                  type="text"
-                  required
-                  placeholder="Enter your wallet address"
-                  className="flex-1 rounded-lg px-4 py-3 border border-green-200 bg-white bg-opacity-60 text-black text-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-                  value={waitlistEmail}
-                  onChange={e => setWaitlistEmail(e.target.value)}
-                  style={{color: '#111'}}
-                />
-                <button
-                  type="submit"
-                  className="rounded-lg px-6 py-3 bg-white text-black font-bold text-lg border border-green-200 hover:bg-green-100 transition"
-                  style={{color: '#111'}}
-                >
-                  Join waitlist now
-                </button>
-              </form>
-            )}
+            {/* Left: Text and Form */}
+            <div className="flex-1 flex flex-col justify-center px-8 py-12 md:py-0 md:pl-12 md:pr-0" style={{ minWidth: 0 }}>
+              <h2 className="text-4xl md:text-[2.5rem] font-extrabold mb-2 text-left" style={{ lineHeight: '1.2em'}}>Get access to more features</h2>
+              <p className="text-xl md:text-2xl font-semibold mb-8 text-left" style={{lineHeight: '1.4em', color: 'rgba(255,255,255,0.9)'}}>Join waitlist and be notified about upcoming features</p>
+              {waitlistSuccess ? (
+                <div className="flex items-center gap-3 bg-green-500/10 text-green-300 rounded-lg px-6 py-4 font-semibold text-lg shadow mt-2">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#7DDA7D"/><path d="M7 13l3 3 7-7" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  You have successfully joined the waitlist!
+                </div>
+              ) : (
+                <form className="flex flex-col md:flex-row w-full gap-3" onSubmit={handleWaitlistSubmit}>
+                  <div className="flex flex-1 bg-[#191919] border border-[#1E1E1E] rounded-lg overflow-hidden min-h-[52px]">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your email"
+                      className="flex-1 bg-transparent px-6 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-green-400 placeholder-white/40 font-medium border-none"
+                      value={waitlistEmail}
+                      onChange={e => setWaitlistEmail(e.target.value)}
+                      style={{ fontWeight: 500, fontSize: 20, lineHeight: '1.4em'}}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="rounded-lg px-8 py-4 font-semibold text-lg border-0 transition min-w-[210px] min-h-[52px]"
+                    style={{
+                      background: 'linear-gradient(90deg, #7DDA7D 43%, #DBF5DB 84%, #FFF 100%)',
+                      color: '#000',
+                      
+                      fontWeight: 600,
+                      fontSize: 20,
+                      lineHeight: '1.4em',
+                    }}
+                  >
+                    Join waitlist now
+                  </button>
+                </form>
+              )}
+            </div>
+            {/* Right: Illustration */}
+            <div className="hidden md:flex flex-col justify-center items-center pr-12 pl-0" style={{ minWidth: 244 }}>
+              <Image src="/branding/singglle.svg" alt="bg" width={244} height={224} style={{ maxWidth: 244, maxHeight: 224 }} />
+            </div>
           </div>
         </div>
       </div>
