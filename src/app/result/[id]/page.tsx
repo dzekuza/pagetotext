@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useWallet } from "@solana/wallet-adapter-react";
 import Button from '../../../../components/Button';
+import ReactMarkdown from 'react-markdown';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -114,7 +115,7 @@ export default function ResultPage() {
   useEffect(() => {
     if (showChat && chatMessages.length === 0) {
       setChatMessages([
-        { role: 'ai', text: `Answer the following questions clearly and professionally. Use proper formatting to enhance readability:\n\n- Break down large chunks of text into short paragraphs.\n- If listing items (e.g., steps, principles, categories), use numbered or bulleted lists.\n- Leave a blank line between paragraphs and list items.\n- Make sure each point is concise, begins with a bolded label if needed (e.g., Utility:), and avoids overwhelming blocks of text.\n- Use clear structure and avoid cramming everything into a single paragraph.` }
+        { role: 'ai', text: "Welcome, do you have any questions related to received analysis?" }
       ]);
     }
   }, [showChat, chatMessages.length]);
@@ -275,7 +276,15 @@ export default function ResultPage() {
               <div className="flex-1 overflow-y-auto px-4 py-2" style={{ maxHeight: 300 }}>
                 {chatMessages.map((msg, idx) => (
                   <div key={idx} className={msg.role === 'ai' ? 'text-green-200 mb-2' : 'text-white mb-2 text-right'}>
-                    <span className="block px-2 py-1 rounded" style={{background: msg.role === 'ai' ? '#1a2e1a' : '#222'}}>{msg.text}</span>
+                    {msg.role === 'ai' ? (
+                      <ReactMarkdown
+                        components={{ p: (props) => <p className="block px-2 py-1 rounded" style={{background: '#1a2e1a'}} {...props} /> }}
+                      >
+                        {msg.text}
+                      </ReactMarkdown>
+                    ) : (
+                      <span className="block px-2 py-1 rounded" style={{background: '#222'}}>{msg.text}</span>
+                    )}
                   </div>
                 ))}
                 {chatLoading && (
@@ -341,7 +350,13 @@ export default function ResultPage() {
                 <div className="flex-1 overflow-y-auto px-6 py-4" style={{ maxHeight: '50vh' }}>
                   {chatMessages.map((msg, idx) => (
                     <div key={idx} className={msg.role === 'ai' ? 'text-green-200 mb-2' : 'text-white mb-2 text-right'}>
-                      <span className="block px-2 py-1 rounded" style={{background: msg.role === 'ai' ? '#1a2e1a' : '#222'}}>{msg.text}</span>
+                      {msg.role === 'ai' ? (
+                        <ReactMarkdown
+                          components={{ p: (props) => <p className="block px-2 py-1 rounded" style={{background: '#1a2e1a'}} {...props} /> }}
+                        >{msg.text}</ReactMarkdown>
+                      ) : (
+                        <span className="block px-2 py-1 rounded" style={{background: '#222'}}>{msg.text}</span>
+                      )}
                     </div>
                   ))}
                   {chatLoading && (
