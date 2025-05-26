@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useWallet } from "@solana/wallet-adapter-react";
+import Button from '../../../../components/Button';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -140,18 +141,23 @@ export default function ResultPage() {
   return (
     <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-6xl mx-auto mt-16 mb-8 px-4">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="text-gray-300 hover:text-green-300 text-lg mb-6 inline-block"
-        >
-          Back
-        </button>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="text-gray-300 hover:text-green-300 text-lg inline-block"
+          >
+            Back
+          </button>
+          <Button className="text-lg py-3 px-6 md:w-auto w-full" onClick={() => setShowUploadModal(true)}>
+            Generate another analysis
+          </Button>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8">
           {/* Left: Your upload card */}
           <div
             className="bg-[#181818] rounded-2xl border border-[#222] shadow-lg p-8 flex flex-col items-center"
-            style={{ height: 'fit-content' }}
+            style={{ height: 'fit-content', width: '100%', maxWidth: '100%', flexBasis: '30%', flexGrow: 0, flexShrink: 0 }}
           >
             <div className="w-full mb-6">
               <div className="text-green-300 font-extrabold text-2xl mb-4">Your upload</div>
@@ -184,15 +190,10 @@ export default function ResultPage() {
                 </div>
               )}
             </div>
-            <button
-              className="w-full bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-6 py-3 shadow hover:brightness-110 transition-all text-lg"
-              onClick={() => setShowUploadModal(true)}
-            >
-              Generate another analysis
-            </button>
           </div>
           {/* Right: Analysis card */}
-          <div className="bg-[#181818] rounded-2xl border border-[#222] shadow-lg p-8 flex flex-col min-h-[480px]">
+          <div className="bg-[#181818] rounded-2xl border border-[#222] shadow-lg p-8 flex flex-col min-h-[480px]"
+            style={{ width: '100%', maxWidth: '100%', flexBasis: '70%', flexGrow: 1, flexShrink: 1 }}>
             <div className="text-green-300 font-extrabold text-2xl mb-6">Analysis</div>
             {/* Summary */}
             <div className="mb-6">
@@ -446,7 +447,7 @@ export default function ResultPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                   </svg>
-                  <span className="text-green-300 font-semibold">Uploading...</span>
+                  <span className="text-green-300 font-semibold">Analyzing your upload...</span>
                 </div>
               ) : (
                 <button

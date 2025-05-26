@@ -31,3 +31,26 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
 .animate-pulse-grow {
   animation: pulse-grow 1.6s cubic-bezier(0.4,0,0.6,1) infinite;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+@layer utilities {
+  @keyframes stroke-loop {
+    0% {
+      stroke-dasharray: 400 200;
+      stroke-dashoffset: 200;
+    }
+    100% {
+      stroke-dashoffset: -400;
+    }
+  }
+
+  .animate-stroke-loop {
+    animation: stroke-loop 3s linear infinite;
+  }
+}

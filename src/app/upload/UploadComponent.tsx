@@ -4,6 +4,8 @@ import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
+import WalletConnectButton from '../../../components/WalletConnectButton';
+import Button from '../../../components/Button';
 
 interface UploadComponentProps {
   standalone?: boolean;
@@ -31,6 +33,8 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
   const [success, setSuccess] = useState<string | null>(null);
   const [uploadId, setUploadId] = useState<number | null>(null);
   const [polling, setPolling] = useState(false);
+  const [showProgressModal, setShowProgressModal] = useState(false);
+  const [continueAnyway, setContinueAnyway] = useState(false);
   const router = useRouter();
   const { publicKey } = useWallet();
 
@@ -128,8 +132,12 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
       setError("Selected file is invalid.");
       return;
     }
+    if (!publicKey && !continueAnyway) {
+      setShowProgressModal(true);
+      return;
+    }
     setUploading(true);
-    const fileExt = files[0].file?.name.split('.').pop();
+    const fileExt = files[0].file?.name.split('.')?.pop();
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = `uploads/${fileName}`;
     // Upload to Supabase Storage
@@ -194,7 +202,8 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
       {standalone && (
         <h1 className="text-2xl font-bold mb-6 text-white">Upload a Book Page Image</h1>
       )}
-      <div className="w-full max-w-md mx-auto bg-[#181818] rounded-2xl shadow-lg border border-[#222] text-white px-6">
+      <div className="relative z-0 w-full max-w-md mx-auto pt-8">
+        <div className="w-full max-w-md mx-auto bg-[#181818] rounded-2xl shadow-lg border border-[#222] text-white px-6">
         <div className="pt-8 pb-2 text-center">
           <div className="text-2xl font-bold text-white">Upload Files</div>
         </div>
@@ -215,13 +224,11 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
               <div className="text-lg font-semibold text-green-300">Choose a file or drag & drop it here</div>
               <div className="text-xs text-gray-400">JPEG, PNG, and PDF formats, up to 10MB</div>
               <input type="file" multiple className="hidden" onChange={handleInputChange} />
-              <button
-                type="button"
-                className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-4 py-2 hover:brightness-110 transition mt-2"
+              <Button
                 onClick={() => document.querySelector<HTMLInputElement>('input[type=file]')?.click()}
               >
                 Browse
-              </button>
+              </Button>
             </div>
           </label>
           <div className="text-center text-sm text-gray-500 my-4">or</div>
@@ -233,13 +240,11 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
               placeholder="Paste file URL here"
               className="flex-1 rounded-lg px-4 py-2 border border-[#333] bg-[#232323] text-white focus:border-green-400 outline-none"
             />
-            <button
-              type="button"
-              className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-4 py-2 hover:brightness-110 transition"
+            <Button
               onClick={handleUrlUpload}
             >
               Upload
-            </button>
+            </Button>
           </div>
           {files.length > 0 && (
             <div className="space-y-2 mb-4">
@@ -261,13 +266,13 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
                       />
                     </div>
                   </div>
-                  <button
-                    className="ml-4 text-gray-400 hover:text-red-400"
+                  <Button
                     onClick={() => handleCancel(file.id)}
+                    className="ml-4 text-gray-400 hover:text-red-400"
                     title="Remove"
                   >
                     ×
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>
@@ -275,13 +280,13 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
         </div>
         <form onSubmit={handleUpload}>
           <div className="flex justify-between space-x-2 pb-8 pt-2 px-0">
-            <button
-              className="w-full bg-gradient-to-r from-green-400 to-green-200 hover:brightness-110 text-black border-0 rounded-lg font-bold flex items-center justify-center gap-1 py-3"
+            <Button
               type="submit"
               disabled={uploading || !files.some(file => file.status === "uploaded")}
+              fullWidth
             >
-              {uploading ? "Uploading..." : polling ? "Processing... Please wait." : "Analyze"}
-            </button>
+              {success ? success : uploading && !polling ? "Analysing your upload" : polling ? "Processing... Please wait." : "Analyze"}
+            </Button>
           </div>
         </form>
         {error && (
@@ -289,8 +294,48 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
             {error}
           </div>
         )}
-        {success && <div className="text-green-400 text-sm">{success}</div>}
+        </div>
       </div>
+      {/* Progress Modal */}
+      {showProgressModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="rounded-2xl bg-[#181818] p-8 w-[95vw] max-w-[420px] flex flex-col shadow-lg relative">
+            <button
+              className="absolute top-4 right-5 text-gray-400 hover:text-green-300 text-2xl font-bold"
+              onClick={() => setShowProgressModal(false)}
+              aria-label="Close modal"
+            >
+              ×
+            </button>
+            <h2 className="text-2xl font-bold text-green-300 mb-4">Don't lose your progress</h2>
+            <div className="text-white text-base mb-6">Connect your wallet in order to get access to your analysis history.</div>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => {
+                  setShowProgressModal(false);
+                  // Open wallet connect modal
+                  const walletBtn = document.querySelector('button, [role="button"]');
+                  if (walletBtn) (walletBtn as HTMLElement).click();
+                }}
+              >
+                Connect wallet
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowProgressModal(false);
+                  setContinueAnyway(true);
+                  setTimeout(() => {
+                    // Trigger the upload again, now with continueAnyway true
+                    document.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                  }, 100);
+                }}
+              >
+                Continue anyway
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 
