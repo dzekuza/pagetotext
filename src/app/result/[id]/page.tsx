@@ -33,6 +33,7 @@ export default function ResultPage() {
   const [error, setError] = useState<string | null>(null);
   const [keywordExplanations, setKeywordExplanations] = useState<string[]>([]);
   const [showChat, setShowChat] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
   const [chatMessages, setChatMessages] = useState<{role: 'user'|'ai', text: string}[]>([]);
   const [chatLoading, setChatLoading] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -250,17 +251,26 @@ export default function ResultPage() {
               </button>
             </div>
           )}
-          {showChat && (
+          {showChat && !showChatModal && (
             <div className="fixed bottom-8 right-8 z-50 w-96 max-w-full bg-[#232323] rounded-2xl shadow-2xl flex flex-col" style={{ minHeight: 420 }}>
               <div className="flex items-center justify-between px-4 py-3 border-b border-[#333] rounded-t-2xl bg-[#232323]">
                 <span className="font-bold text-lg text-green-300">AI Chat</span>
-                <button
-                  className="text-gray-400 hover:text-green-300 text-2xl font-bold"
-                  onClick={handleCloseChat}
-                  aria-label="Close chat"
-                >
-                  ×
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    className="text-gray-400 hover:text-green-300 text-xl font-bold mr-2"
+                    onClick={() => setShowChatModal(true)}
+                    aria-label="Expand chat"
+                  >
+                    <Image src="/branding/expland.svg" alt="Expand" width={16} height={16} />
+                  </button>
+                  <button
+                    className="text-gray-400 hover:text-green-300 text-3xl font-bold"
+                    onClick={handleCloseChat}
+                    aria-label="Close chat"
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
               <div className="flex-1 overflow-y-auto px-4 py-2" style={{ maxHeight: 300 }}>
                 {chatMessages.map((msg, idx) => (
@@ -313,6 +323,73 @@ export default function ResultPage() {
                   Send
                 </button>
               </form>
+            </div>
+          )}
+          {showChatModal && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-opacity-70 backdrop-blur-sm">
+              <div className="rounded-2xl bg-[#232323] p-0 w-full max-w-2xl flex flex-col shadow-2xl relative min-h-[500px] max-h-[90vh]">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-[#333] rounded-t-2xl bg-[#232323]">
+                  <span className="font-bold text-lg text-green-300">AI Chat</span>
+                  <button
+                    className="text-gray-400 hover:text-green-300 text-2xl font-bold"
+                    onClick={() => setShowChatModal(false)}
+                    aria-label="Close expanded chat"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto px-6 py-4" style={{ maxHeight: '50vh' }}>
+                  {chatMessages.map((msg, idx) => (
+                    <div key={idx} className={msg.role === 'ai' ? 'text-green-200 mb-2' : 'text-white mb-2 text-right'}>
+                      <span className="block px-2 py-1 rounded" style={{background: msg.role === 'ai' ? '#1a2e1a' : '#222'}}>{msg.text}</span>
+                    </div>
+                  ))}
+                  {chatLoading && (
+                    <div className="text-green-200 mb-2"><span className="block px-2 py-1 rounded bg-[#1a2e1a]">AI is typing...</span></div>
+                  )}
+                </div>
+                <form
+                  className="flex items-center gap-2 border-t border-[#333] px-6 py-4 bg-[#232323] rounded-b-2xl"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const form = e.target as HTMLFormElement;
+                    const input = form.elements.namedItem('userInput') as HTMLInputElement;
+                    const userInput = input.value.trim();
+                    if (!userInput) return;
+                    setChatMessages((msgs) => [...msgs, { role: 'user', text: userInput }]);
+                    setChatLoading(true);
+                    input.value = '';
+                    try {
+                      const res = await fetch('/api/ask-ai', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ question: userInput, context: `${data.summary || ''}\n${data.main_argument || ''}\n${keywords.join(', ')}` }),
+                      });
+                      const result = await res.json();
+                      setChatMessages((msgs) => [...msgs, { role: 'ai', text: result.answer || result.error || 'No response from AI.' }]);
+                    } catch {
+                      setChatMessages((msgs) => [...msgs, { role: 'ai', text: 'Error contacting AI.' }]);
+                    }
+                    setChatLoading(false);
+                  }}
+                >
+                  <input
+                    name="userInput"
+                    type="text"
+                    className="flex-1 rounded-lg bg-[#181818] text-white px-3 py-2 border border-[#333] focus:outline-none focus:ring-2 focus:ring-green-400"
+                    placeholder="Ask anything about these results..."
+                    autoComplete="off"
+                    disabled={chatLoading}
+                  />
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-green-400 to-green-200 text-black font-bold rounded-lg px-4 py-2 disabled:opacity-50"
+                    disabled={chatLoading}
+                  >
+                    Send
+                  </button>
+                </form>
+              </div>
             </div>
           )}
         </>

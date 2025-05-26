@@ -26,6 +26,19 @@ export default function RootLayout({
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <html lang="en" style={{ scrollBehavior: 'smooth' }}>
+      <head>
+        <title>Alpha Snap – Snap Anything, Get the Alpha</title>
+        <meta name="description" content="Understand complex content in seconds" />
+        <meta property="og:title" content="Alpha Snap – Snap Anything, Get the Alpha" />
+        <meta property="og:description" content="Understand complex content in seconds" />
+        <meta property="og:image" content="/branding/alphasoc.png" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Alpha Snap – Snap Anything, Get the Alpha" />
+        <meta name="twitter:description" content="Understand complex content in seconds" />
+        <meta name="twitter:image" content="/branding/alphasoc.png" />
+        <link rel="icon" href="/branding/alphasnap.svg" type="image/svg+xml" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

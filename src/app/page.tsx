@@ -12,6 +12,8 @@ export default function Home() {
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [caCopied, setCaCopied] = useState(false);
+  const comingFeaturesRef = useRef<HTMLDivElement | null>(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -29,6 +31,24 @@ export default function Home() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [explainingIndex]);
+
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting) {
+        setShowScrollHint(true);
+        setTimeout(() => setShowScrollHint(false), 1200); // Animation duration
+      }
+    };
+    const observer = new window.IntersectionObserver(handleIntersection, {
+      threshold: 0.3,
+    });
+    if (comingFeaturesRef.current) {
+      observer.observe(comingFeaturesRef.current);
+    }
+    return () => {
+      if (comingFeaturesRef.current) observer.unobserve(comingFeaturesRef.current);
+    };
+  }, []);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +151,7 @@ export default function Home() {
             {/* Left: Mission Text */}
             <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start">
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">Our mission</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Make crypto knowledge accessible, actionable, and instant - for everyone.</h2>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-4">Make crypto knowledge accessible, actionable, and instant - for everyone.</h2>
               <p className="text-gray-300 text-lg">Alpha Snap exists to break down the barriers of complexity in crypto. By turning dense content into clear insights in seconds, we help users to make smarter decisions, move faster, and stay ahead of the curve – whether they&apos;re investors, builders, or curious degens.</p>
             </div>
             {/* Right: 3D Coin Image */}
@@ -146,19 +166,22 @@ export default function Home() {
 
         {/* Coming Soon Features Section (side-scroll, reverted) */}
         <section id="coming-features" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
-          <div className="flex space-x-4 overflow-x-auto pb-4 hide-scrollbar">
+          <div
+            ref={comingFeaturesRef}
+            className={`flex space-x-4 overflow-x-auto pb-4 hide-scrollbar${showScrollHint ? ' animate-scroll-hint' : ''}`}
+          >
             {/* Row 1 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
-                <Image src="/branding/narrative.png" alt="Narrative Tracker Icon" width={65} height={59} />
+                <Image src="/branding/narrative.png" alt="Narrative Tracker Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
               <div className="flex flex-col gap-8 w-full">
                 <div className="flex flex-col gap-2">
                   <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow">Coming soon</span>
                   <h3 className="text-2xl font-extrabold text-white">Narrative Tracker / Buzz Radar</h3>
-                  <p className="text-white/90 text-lg">Scan any screenshot, doc, or tweet to receive any kind of the following data:</p>
+                  <p className="text-white/90 text-lg">Scan any screenshot, doc, or tweet to receive the following data:</p>
                 </div>
                 <div className="flex flex-col gap-2 mt-2">
                   <div className="bg-[#111] rounded-xl px-6 py-4">
@@ -179,17 +202,17 @@ export default function Home() {
               </div>
             </div>
             {/* Row 2 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
-                <Image src="/branding/flowexp.png" alt="DeFi Flow Explainer Icon" width={65} height={59} />
+                <Image src="/branding/flowexp.png" alt="DeFi Flow Explainer Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
               <div className="flex flex-col gap-8  w-full">
                 <div className="flex flex-col gap-2">
                   <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow">Coming soon</span>
                   <h3 className="text-2xl font-extrabold text-white">DeFi Flow Explainer</h3>
-                  <p className="text-white/90 text-lg">Upload a screenshot of a transaction (e.g., from Etherscan, DeBank, Zapper) or a snippet from a DeFi protocol doc to receive:</p>
+                  <p className="text-white/90 text-lg">Upload a screenshot of a transaction or a snippet from a DeFi protocol doc to receive:</p>
                 </div>
                 <div className="flex flex-col gap-2 mt-2">
                   <div className="bg-[#111] rounded-xl px-6 py-4">
@@ -209,10 +232,10 @@ export default function Home() {
               </div>
             </div>
             {/* Row 3 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[320px] sm:min-w-[490px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
-                <Image src="/branding/smartpic.png" alt="Smart Contract TL;DR Icon" width={65} height={59} />
+                <Image src="/branding/smartpic.png" alt="Smart Contract TL;DR Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
               <div className="flex flex-col gap-8 w-full">
@@ -338,7 +361,7 @@ export default function Home() {
               <div className="text-sm text-white/80">© 2025 LinkedNation.</div>
             </div>
             {/* Right: Icons and Disclaimer */}
-            <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-col items-end gap-2 footer-mobile-items-start">
               <div className="flex flex-row items-center gap-6 mb-1">
                 <a href="https://dexscreener.com/" target="_blank" rel="noopener noreferrer" aria-label="Dexscreener">
                   <Image src="/branding/dex-screener-seeklogo 1.png" alt="Dexscreener" width={32} height={32} className="w-8 h-8" />

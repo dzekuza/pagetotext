@@ -54,3 +54,20 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
     animation: stroke-loop 3s linear infinite;
   }
 }
+
+@media (max-width: 767px) {
+  .footer-mobile-items-start {
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+}
+
+@keyframes scroll-hint {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-24px); }
+  20% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+.animate-scroll-hint {
+  animation: scroll-hint 5s cubic-bezier(0.4,0,0.6,1);
+}
