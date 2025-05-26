@@ -4,7 +4,6 @@ import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import WalletConnectButton from '../../../components/WalletConnectButton';
 import Button from '../../../components/Button';
 
 interface UploadComponentProps {
@@ -307,7 +306,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
             >
               ×
             </button>
-            <h2 className="text-2xl font-bold text-green-300 mb-4">Don't lose your progress</h2>
+            <h2 className="text-2xl font-bold text-green-300 mb-4">Don&apos;t lose your progress</h2>
             <div className="text-white text-base mb-6">Connect your wallet in order to get access to your analysis history.</div>
             <div className="flex flex-col gap-3">
               <Button

@@ -67,15 +67,15 @@ export default function Home() {
                 <Image src="/branding/A_2D_digital_vector_illustration_features_a_green_ Background Removed.png" alt="Tick" width={28} height={28} className="mr-3" />
                 <span className="text-[#e6ffe6] text-base">Summary in plain English (or degen-speak)</span>
               </li>
-              <li className="flex items-center bg-[#181818] rounded-xl px-6 py-3">
+              <li className="flex items-center bg-[#181818] rounded-xl px-4 py-3">
                 <Image src="/branding/A_2D_digital_vector_illustration_features_a_green_ Background Removed.png" alt="Tick" width={28} height={28} className="mr-3" />
                 <span className="text-[#e6ffe6] text-base">Keywords & definitions (DePIN, restaking, MEV, etc.)</span>
               </li>
-              <li className="flex items-center bg-[#181818] rounded-xl px-6 py-3">
+              <li className="flex items-center bg-[#181818] rounded-xl px-4 py-3">
                 <Image src="/branding/A_2D_digital_vector_illustration_features_a_green_ Background Removed.png" alt="Tick" width={28} height={28} className="mr-3" />
                 <span className="text-[#e6ffe6] text-base">Main argument or narrative (What are they actually saying?)</span>
               </li>
-              <li className="flex items-center bg-[#181818] rounded-xl px-6 py-3">
+              <li className="flex items-center bg-[#181818] rounded-xl px-4 py-3">
                 <Image src="/branding/A_2D_digital_vector_illustration_features_a_green_ Background Removed.png" alt="Tick" width={28} height={28} className="mr-3" />
                 <span className="text-[#e6ffe6] text-base">Al chat assistant to explore further</span>
               </li>
