@@ -11,6 +11,7 @@ export default function Home() {
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [caCopied, setCaCopied] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -147,10 +148,10 @@ export default function Home() {
         <section id="coming-features" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
           <div className="flex space-x-4 overflow-x-auto pb-4 hide-scrollbar">
             {/* Row 1 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[700px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
-                <Image src="/branding/1st image on soon.svg" alt="Narrative Tracker Icon" width={65} height={59} />
+                <Image src="/branding/narrative.png" alt="Narrative Tracker Icon" width={65} height={59} />
               </div>
               {/* Content */}
               <div className="flex flex-col gap-8 w-full">
@@ -159,7 +160,7 @@ export default function Home() {
                   <h3 className="text-2xl font-extrabold text-white">Narrative Tracker / Buzz Radar</h3>
                   <p className="text-white/90 text-lg">Scan any screenshot, doc, or tweet to receive any kind of the following data:</p>
                 </div>
-                <div className="flex flex-col gap-4 mt-2">
+                <div className="flex flex-col gap-2 mt-2">
                   <div className="bg-[#111] rounded-xl px-6 py-4">
                     <span className="text-lg font-bold bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#7DDA7D] text-transparent bg-clip-text">Narrative fit</span>
                   </div>
@@ -178,7 +179,7 @@ export default function Home() {
               </div>
             </div>
             {/* Row 2 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[700px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
                 <Image src="/branding/2nd image on soon.svg" alt="DeFi Flow Explainer Icon" width={65} height={59} />
@@ -190,7 +191,7 @@ export default function Home() {
                   <h3 className="text-2xl font-extrabold text-white">DeFi Flow Explainer</h3>
                   <p className="text-white/90 text-lg">Upload a screenshot of a transaction (e.g., from Etherscan, DeBank, Zapper) or a snippet from a DeFi protocol doc to receive:</p>
                 </div>
-                <div className="flex flex-col gap-4 mt-2">
+                <div className="flex flex-col gap-2 mt-2">
                   <div className="bg-[#111] rounded-xl px-6 py-4">
                     <span className="text-lg font-bold bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#7DDA7D] text-transparent bg-clip-text">Transaction breakdown</span>
                   </div>
@@ -208,7 +209,7 @@ export default function Home() {
               </div>
             </div>
             {/* Row 3 */}
-            <div className="w-[95vw] min-w-[370px] sm:min-w-[700px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
+            <div className="w-[95vw] min-w-[370px] sm:min-w-[550px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
               {/* Icon */}
               <div className="flex-shrink-0 flex items-start justify-center mb-2">
                 <Image src="/branding/3rd image on soon.svg" alt="Smart Contract TL;DR Icon" width={65} height={59} />
@@ -220,7 +221,7 @@ export default function Home() {
                   <h3 className="text-2xl font-extrabold text-white">Smart Contract TL;DR</h3>
                   <p className="text-white/90 text-lg">Take a snippet from a contract (or a screenshot from an audit report) to receive:</p>
                 </div>
-                <div className="flex flex-col gap-4 mt-2">
+                <div className="flex flex-col gap-2 mt-2">
                   <div className="bg-[#111] rounded-xl px-6 py-4">
                     <span className="text-lg font-bold bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#7DDA7D] text-transparent bg-clip-text">Plain English breakdown</span>
                   </div>
@@ -260,11 +261,8 @@ export default function Home() {
                     const addr = document.getElementById('ca-address')?.textContent;
                     if (addr) {
                       navigator.clipboard.writeText(addr);
-                      const btn = document.getElementById('ca-copy-btn');
-                      if (btn) {
-                        btn.classList.add('copied');
-                        setTimeout(() => { btn.classList.remove('copied'); }, 1200);
-                      }
+                      setCaCopied(true);
+                      setTimeout(() => setCaCopied(false), 3000);
                     }
                   }}
                   id="ca-copy-btn"
@@ -277,6 +275,11 @@ export default function Home() {
                   </svg>
                 </button>
               </div>
+              {caCopied && (
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-[-2.2rem] bg-green-700 text-white text-xs font-semibold rounded px-4 py-2 shadow z-20 animate-fade-in-out">
+                  CA copied
+                </div>
+              )}
             </div>
           </div>
         </section>

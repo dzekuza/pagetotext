@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <html lang="en">
+    <html lang="en" style={{ scrollBehavior: 'smooth' }}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -37,10 +37,10 @@ export default function RootLayout({
             {/* Desktop Menu */}
             <div className="flex-1 justify-center hidden md:flex">
               <div className="flex items-center gap-6">
-                <a href="#features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors">How it works</a>
-                <a href="#mission" className="text-white text-sm font-semibold hover:text-green-300 transition-colors">Our mission</a>
-                <a href="#coming-features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors">Upcoming features</a>
-                <a href="#token" className="text-white text-sm font-semibold hover:text-green-300 transition-colors">$ALPHA</a>
+                <a href="#features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }}>How it works</a>
+                <a href="#mission" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' }); }}>Our mission</a>
+                <a href="#coming-features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('coming-features')?.scrollIntoView({ behavior: 'smooth' }); }}>Upcoming features</a>
+                <a href="#token" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('token')?.scrollIntoView({ behavior: 'smooth' }); }}>$ALPHA</a>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -67,10 +67,10 @@ export default function RootLayout({
                   ×
                 </button>
                 <div className="flex flex-col gap-8 items-center">
-                  <a href="#features" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={() => setMenuOpen(false)}>How it works</a>
-                  <a href="#mission" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={() => setMenuOpen(false)}>Our mission</a>
-                  <a href="#coming-features" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={() => setMenuOpen(false)}>Upcoming features</a>
-                  <a href="#token" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={() => setMenuOpen(false)}>$ALPHA</a>
+                  <a href="#features" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => { document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}>How it works</a>
+                  <a href="#mission" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => { document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}>Our mission</a>
+                  <a href="#coming-features" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => { document.getElementById('coming-features')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}>Upcoming features</a>
+                  <a href="#token" className="text-white text-2xl font-bold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => { document.getElementById('token')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}>$ALPHA</a>
                 </div>
               </div>
             )}
