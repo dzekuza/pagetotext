@@ -396,7 +396,7 @@ export default function ResultPage() {
       </div>
       {/* Upload Modal */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-opacity-70 backdrop-blur-sm">
           <div className="rounded-2xl bg-[#181818] p-8 w-[540px] max-w-full flex flex-col shadow-lg relative">
             <button
               className="absolute top-4 right-5 text-gray-400 hover:text-green-300 text-2xl font-bold"

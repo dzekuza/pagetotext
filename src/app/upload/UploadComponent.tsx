@@ -201,9 +201,9 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
       {standalone && (
         <h1 className="text-2xl font-bold mb-6 text-white">Upload a Book Page Image</h1>
       )}
-      <div className="relative z-0 w-full max-w-md mx-auto pt-8">
-        <div className="w-full max-w-md mx-auto bg-[#181818] rounded-2xl shadow-lg border border-[#222] text-white px-6">
-        <div className="pt-8 pb-2 text-center">
+      <div className="relative z-0 w-full max-w-md mx-auto pb-8">
+        <div className="w-full max-w-md mx-auto bg-[#181818] rounded-2xl shadow-lg border border-[#222] text-white px-6 py-8">
+        <div className="pb-4 text-center">
           <div className="text-2xl font-bold text-white">Upload Files</div>
         </div>
         <div className="px-0">
@@ -278,7 +278,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
           )}
         </div>
         <form onSubmit={handleUpload}>
-          <div className="flex justify-between space-x-2 pb-8 pt-2 px-0">
+          <div className="flex justify-between space-x-2 px-0">
             <Button
               type="submit"
               disabled={uploading || !files.some(file => file.status === "uploaded")}
@@ -289,7 +289,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
           </div>
         </form>
         {error && (
-          <div className="bg-red-500 bg-opacity-20 text-red-400 text-sm rounded-lg px-4 py-3 mt-2 font-semibold border border-red-400">
+          <div className="bg-red-500 bg-opacity-20 text-white text-sm rounded-lg px-4 py-3 font-semibold border border-red-400 mt-4">
             {error}
           </div>
         )}
@@ -297,7 +297,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
       </div>
       {/* Progress Modal */}
       {showProgressModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-opacity-70 backdrop-blur-sm">
           <div className="rounded-2xl bg-[#181818] p-8 w-[95vw] max-w-[420px] flex flex-col shadow-lg relative">
             <button
               className="absolute top-4 right-5 text-gray-400 hover:text-green-300 text-2xl font-bold"

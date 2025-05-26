@@ -168,7 +168,7 @@ export default function Home() {
         <section id="coming-features" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
           <div
             ref={comingFeaturesRef}
-            className={`flex space-x-4 overflow-x-auto pb-4 hide-scrollbar${showScrollHint ? ' animate-scroll-hint' : ''}`}
+            className={`flex space-x-4 overflow-x-auto hide-scrollbar${showScrollHint ? ' animate-scroll-hint' : ''}`}
           >
             {/* Row 1 */}
             <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
@@ -382,7 +382,7 @@ export default function Home() {
         </footer>
         {/* Disclaimer Modal */}
         {showDisclaimer && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-opacity-70 backdrop-blur-sm">
             <div className="rounded-2xl bg-[#181818] p-8 w-[95vw] max-w-[420px] flex flex-col shadow-lg relative">
               <button
                 className="absolute top-4 right-5 text-gray-400 hover:text-green-300 text-2xl font-bold"
