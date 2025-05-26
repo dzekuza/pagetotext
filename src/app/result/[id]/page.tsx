@@ -114,7 +114,7 @@ export default function ResultPage() {
   useEffect(() => {
     if (showChat && chatMessages.length === 0) {
       setChatMessages([
-        { role: 'ai', text: "Welcome, do you have any questions related to received analysis?" }
+        { role: 'ai', text: `Answer the following questions clearly and professionally. Use proper formatting to enhance readability:\n\n- Break down large chunks of text into short paragraphs.\n- If listing items (e.g., steps, principles, categories), use numbered or bulleted lists.\n- Leave a blank line between paragraphs and list items.\n- Make sure each point is concise, begins with a bolded label if needed (e.g., Utility:), and avoids overwhelming blocks of text.\n- Use clear structure and avoid cramming everything into a single paragraph.` }
       ]);
     }
   }, [showChat, chatMessages.length]);
