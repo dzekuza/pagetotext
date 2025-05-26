@@ -114,7 +114,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">1</span>Upload image or pdf file</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1</span>Upload image or pdf file</span>
               </div>
               <p className="text-gray-300">Insert image of page&apos;s book or simply drag and drop PDF document</p>
             </div>
@@ -122,7 +122,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">2</span>Our AI will analyze it</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2</span>Our AI will analyze it</span>
               </div>
               <p className="text-gray-300">BookReader will take care on the document by carefully analyzing it</p>
             </div>
@@ -130,7 +130,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">3</span>Get results</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3</span>Get results</span>
               </div>
               <p className="text-gray-300">Receive summary of provided document, keywords and argument of passage</p>
             </div>
@@ -138,7 +138,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">4</span>Ask AI</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4</span>Ask AI</span>
               </div>
               <p className="text-gray-300">Still need more explanations? Ask chat widget powered by AI for better explanation</p>
             </div>
@@ -177,7 +177,7 @@ export default function Home() {
                 <Image src="/branding/narrative.png" alt="Narrative Tracker Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
-              <div className="flex flex-col gap-8 w-full">
+              <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-col gap-2">
                   <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow">Coming soon</span>
                   <h3 className="text-2xl font-extrabold text-white">Narrative Tracker / Buzz Radar</h3>
@@ -208,7 +208,7 @@ export default function Home() {
                 <Image src="/branding/flowexp.png" alt="DeFi Flow Explainer Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
-              <div className="flex flex-col gap-8  w-full">
+              <div className="flex flex-col gap-2  w-full">
                 <div className="flex flex-col gap-2">
                   <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow">Coming soon</span>
                   <h3 className="text-2xl font-extrabold text-white">DeFi Flow Explainer</h3>
@@ -238,7 +238,7 @@ export default function Home() {
                 <Image src="/branding/smartpic.png" alt="Smart Contract TL;DR Icon" width={65} height={59} style={{ height: 'auto' }} />
               </div>
               {/* Content */}
-              <div className="flex flex-col gap-8 w-full">
+              <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-col gap-2">
                   <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow">Coming soon</span>
                   <h3 className="text-2xl font-extrabold text-white">Smart Contract TL;DR</h3>
@@ -364,10 +364,10 @@ export default function Home() {
             <div className="flex flex-col items-end gap-2 footer-mobile-items-start">
               <div className="flex flex-row items-center gap-6 mb-1">
                 <a href="https://dexscreener.com/" target="_blank" rel="noopener noreferrer" aria-label="Dexscreener">
-                  <Image src="/branding/dex-screener-seeklogo 1.png" alt="Dexscreener" width={32} height={32} className="w-8 h-8" />
+                  <Image src="/branding/dex-screener-seeklogo 1.png" alt="Dexscreener" width={24} height={32} className="w-7 h-7" />
                 </a>
                 <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">
-                  <Image src="/branding/xloo.png" alt="X" width={32} height={32} className="w-8 h-8" />
+                  <Image src="/branding/xloo.png" alt="X" width={20} height={20} className="w-6 h-6" />
                 </a>
               </div>
               <button
