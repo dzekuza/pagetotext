@@ -48,9 +48,6 @@ export default function Home() {
   const [utilityDragStartX, setUtilityDragStartX] = useState<number | null>(null);
   const [utilityScrollLeft, setUtilityScrollLeft] = useState<number>(0);
 
-  // Utility section: manage animation state
-  const [utilityPaused, setUtilityPaused] = useState(false);
-
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -108,7 +105,7 @@ export default function Home() {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       if (entries[0].isIntersecting) {
         setShowScrollHint(true);
-        setTimeout(() => setShowScrollHint(false), 1200);
+        setTimeout(() => setShowScrollHint(false), 1200); // 1.2s duration
       }
     };
     const ref = utilitySliderRef.current;
