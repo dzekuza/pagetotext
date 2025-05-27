@@ -31,7 +31,7 @@ export default function WalletConnectButton() {
       ) : (
         <>
           <button
-            className="bg-gradient-to-r from-green-400 to-green-200 text-black font-semibold rounded-lg px-5 py-2 shadow hover:brightness-110 transition-all text-sm"
+            className="px-8 py-2 rounded-[8px] font-bold text-black text-base border border-white/60 shadow-inner bg-[length:200%_100%] bg-[position:0%_0%] bg-[linear-gradient(90deg,_#95ED7F,_#DBF5DB,_#FFF)] transition-all duration-500 ease-in-out hover:bg-[position:100%_0%] hover:bg-[linear-gradient(90deg,_#136B0A,_#95ED7F,_#058B05)] hover:border-[rgba(77,255,32,0.8)] hover:shadow-[0_0_10px_0_rgba(149,237,127,0.8)] focus:outline-none disabled:opacity-50 min-w-[44px] cursor-pointer"
             onClick={() => setShowModal(true)}
           >
             Connect Wallet

@@ -146,7 +146,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1</span>Upload image or pdf file</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1:</span>Upload image or pdf file</span>
               </div>
               <p className="text-gray-300">Insert image of page&apos;s book or simply drag and drop PDF document</p>
             </div>
@@ -154,7 +154,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2</span>Our AI will analyze it</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2:</span>Our AI will analyze it</span>
               </div>
               <p className="text-gray-300">BookReader will take care on the document by carefully analyzing it</p>
             </div>
@@ -162,7 +162,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3</span>Get results</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3:</span>Get results</span>
               </div>
               <p className="text-gray-300">Receive summary of provided document, keywords and argument of passage</p>
             </div>
@@ -170,7 +170,7 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4</span>Ask AI</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4:</span>Ask AI</span>
               </div>
               <p className="text-gray-300">Still need more explanations? Ask chat widget powered by AI for better explanation</p>
             </div>
