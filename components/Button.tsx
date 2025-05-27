@@ -21,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({ children, className = "", fullWidth = f
   cursor-pointer
   ${fullWidth ? 'w-full' : ''}
   ${className}
+  mobile-button
     `}
     {...props}
   >
@@ -28,4 +29,14 @@ const Button: React.FC<ButtonProps> = ({ children, className = "", fullWidth = f
   </button>
 );
 
-export default Button; 
+export default Button;
+
+<style jsx global>{`
+  @media (max-width: 767px) {
+    .mobile-button {
+      font-size: 14px !important;
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+  }
+`}</style> 

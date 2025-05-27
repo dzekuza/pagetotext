@@ -409,50 +409,28 @@ export default function Home() {
               onMouseLeave={e => e.currentTarget.classList.remove('utility-slider-paused')}
               style={{ willChange: 'transform', minWidth: '200%' }}
             >
-              {/* Card set 1 */}
+              {/* Stake-to-Unlock */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
                 <div className="flex flex-col gap-2 w-full">
                   <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
                   <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
                 </div>
               </div>
+              {/* Pay-as-You-Go Credits */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
                 <div className="flex flex-col gap-2 w-full">
                   <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
                   <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
                 </div>
               </div>
+              {/* Contribute-to-Earn */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
                 <div className="flex flex-col gap-2 w-full">
                   <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
                   <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
                 </div>
               </div>
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>
-                  <p className="text-white/90 text-lg">Token holders gain access to exclusive community tools, early feature rollouts, and future ecosystem rewards.</p>
-                </div>
-              </div>
-              {/* Card set 2 (duplicate) */}
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
-                  <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
-                </div>
-              </div>
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
-                  <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
-                </div>
-              </div>
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
-                  <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
-                </div>
-              </div>
+              {/* Community Access & Rewards */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
                 <div className="flex flex-col gap-2 w-full">
                   <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>

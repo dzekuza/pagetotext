@@ -37,7 +37,7 @@ export default function RootLayout({
         <meta name="twitter:title" content="Alpha Snap – Snap Anything, Get the Alpha" />
         <meta name="twitter:description" content="Understand complex content in seconds" />
         <meta name="twitter:image" content="/branding/alphasoc.png" />
-        <link rel="icon" href="/branding/Untitled design - 2025-05-27T150239.211.png" type="image/png" />
+        <link rel="icon" href="/branding/newfaviconalpha.png" type="image/png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

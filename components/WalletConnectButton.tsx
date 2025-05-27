@@ -31,7 +31,7 @@ export default function WalletConnectButton() {
       ) : (
         <>
           <button
-            className="px-8 py-2 rounded-[8px] font-bold text-black text-base border border-white/60 shadow-inner bg-[length:200%_100%] bg-[position:0%_0%] bg-[linear-gradient(90deg,_#95ED7F,_#DBF5DB,_#FFF)] transition-all duration-500 ease-in-out hover:bg-[position:100%_0%] hover:bg-[linear-gradient(90deg,_#136B0A,_#95ED7F,_#058B05)] hover:border-[rgba(77,255,32,0.8)] hover:shadow-[0_0_10px_0_rgba(149,237,127,0.8)] focus:outline-none disabled:opacity-50 min-w-[44px] cursor-pointer"
+            className="px-8 py-2 rounded-[8px] font-bold text-black text-base border border-white/60 shadow-inner bg-[length:200%_100%] bg-[position:0%_0%] bg-[linear-gradient(90deg,_#95ED7F,_#DBF5DB,_#FFF)] transition-all duration-500 ease-in-out hover:bg-[position:100%_0%] hover:bg-[linear-gradient(90deg,_#136B0A,_#95ED7F,_#058B05)] hover:border-[rgba(77,255,32,0.8)] hover:shadow-[0_0_10px_0_rgba(149,237,127,0.8)] focus:outline-none disabled:opacity-50 min-w-[44px] cursor-pointer wallet-connect-mobile-btn"
             onClick={() => setShowModal(true)}
           >
             Connect Wallet
@@ -80,6 +80,14 @@ export default function WalletConnectButton() {
           )}
         </>
       )}
+      <style jsx global>{`
+        @media (max-width: 767px) {
+          .wallet-connect-mobile-btn {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
