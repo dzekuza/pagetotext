@@ -407,7 +407,7 @@ export default function Home() {
               className="flex space-x-4 utility-slider-animate"
               onMouseEnter={e => e.currentTarget.classList.add('utility-slider-paused')}
               onMouseLeave={e => e.currentTarget.classList.remove('utility-slider-paused')}
-              style={{ willChange: 'transform', minWidth: '200%' }}
+              style={{ willChange: 'transform' }}
             >
               {/* Stake-to-Unlock */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
