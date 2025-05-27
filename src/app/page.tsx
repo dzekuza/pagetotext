@@ -333,8 +333,8 @@ export default function Home() {
               className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start bg-section-gradient"
             >
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">$ALPHA Token</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Snap, upload, and get instant crypto insights</h2>
-              <p className="text-gray-300 text-lg mb-6">Just snap a screenshot or upload a document, and Alpha Snap will break down the content for you. Instantly understand complex crypto topics, trends, and risks—no matter your experience level.</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Seamless Access, Flexible Payments, Community Powered.</h2>
+              <p className="text-gray-300 text-lg mb-6">The $ALPHA token plays a central role in the Alpha Snap platform, enabling access to features, payment for services, and community participation.</p>
               {/* Contract Address Box */}
               <div className="flex items-center gap-3 bg-[#232323] rounded-xl px-5 py-4 mt-2 select-all group relative w-full max-w-[420px]">
                 <span className="text-xs font-bold text-white bg-[#181818] rounded px-3 py-1 mr-2">CA</span>
