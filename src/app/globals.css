@@ -29,7 +29,7 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
 }
 
 .animate-pulse-grow {
-  animation: pulse-grow 1.6s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: pulse-grow 2.24s cubic-bezier(0.4,0,0.6,1) infinite;
 }
 
 .hide-scrollbar {
@@ -70,4 +70,22 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
 }
 .animate-scroll-hint {
   animation: scroll-hint 5s cubic-bezier(0.4,0,0.6,1);
+}
+
+.opacity-0 {
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1), transform 1.2s cubic-bezier(0.4,0,0.2,1);
+  transform: translateY(32px);
+}
+.fade-in {
+  opacity: 1 !important;
+  transform: translateY(0);
+  transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1), transform 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.bg-section-gradient {
+  background-image: url(/branding/1stbg.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }

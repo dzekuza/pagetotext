@@ -5,6 +5,23 @@ import Image from "next/image";
 import UploadComponent from "./upload/UploadComponent";
 import Button from '../../components/Button';
 
+// Add fade-in animation logic
+const useFadeInOnScroll = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => { if (ref.current) observer.unobserve(ref.current); };
+  }, []);
+  return [ref, visible] as const;
+};
+
 export default function Home() {
   const [explainingIndex, setExplainingIndex] = useState<number | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
@@ -14,6 +31,13 @@ export default function Home() {
   const [caCopied, setCaCopied] = useState(false);
   const comingFeaturesRef = useRef<HTMLDivElement | null>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
+
+  // Fade-in hooks for major sections
+  const [heroRef, heroVisible] = useFadeInOnScroll();
+  const [featuresRef, featuresVisible] = useFadeInOnScroll();
+  const [missionRef, missionVisible] = useFadeInOnScroll();
+  const [tokenRef, tokenVisible] = useFadeInOnScroll();
+  const [poweredRef, poweredVisible] = useFadeInOnScroll();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -71,7 +95,8 @@ export default function Home() {
       <div className="w-full max-w-[1420px] mx-auto px-0 md:px-16 z-[1]">
         {/* Hero Section */}
         <div
-          className="flex flex-col md:flex-row items-center justify-center flex-1 w-full gap-8 py-12 relative z-10 px-4 md:px-0"
+          ref={heroRef}
+          className={`flex flex-col md:flex-row items-center justify-center flex-1 w-full gap-8 py-12 relative z-10 px-4 md:px-0 ${heroVisible ? 'fade-in' : 'opacity-0'}`}
           style={{
             backgroundImage: 'url(/branding/1stbg.png)',
             backgroundSize: 'contain',
@@ -109,7 +134,10 @@ export default function Home() {
         </div>
         {/* Features Section (screenshot style) */}
         <section id="features" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-stretch">
+          <div
+            ref={featuresRef}
+            className={`flex flex-col md:flex-row gap-4 justify-center items-stretch ${featuresVisible ? 'fade-in' : 'opacity-0'}`}
+          >
             {/* Step 1 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
@@ -149,14 +177,17 @@ export default function Home() {
         <section id="mission" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Left: Mission Text */}
-            <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start">
+            <div
+              ref={missionRef}
+              className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start bg-section-gradient"
+            >
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">Our mission</span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-4">Make crypto knowledge accessible, actionable, and instant - for everyone.</h2>
-              <p className="text-gray-300 text-lg">Alpha Snap exists to break down the barriers of complexity in crypto. By turning dense content into clear insights in seconds, we help users to make smarter decisions, move faster, and stay ahead of the curve – whether they&apos;re investors, builders, or curious degens.</p>
+              <p className="text-gray-300 text-lg">Alpha Snap exists to break down the barriers of complexity in crypto. By turning dense content into clear insights in seconds, we help users to make smarter decisions, move faster, and stay ahead of the curve – whether they're investors, builders, or curious degens.</p>
             </div>
             {/* Right: 3D Coin Image */}
             <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex items-center justify-center">
-              <Image src="/branding/missiontokenn.png" alt="Alpha Snap Coin" width={420} height={420} className="w-full max-w-[420px] h-auto rounded-2xl" />
+              <Image src="/branding/missiontokenn.png" alt="Alpha Snap Coin" width={420} height={420} className="w-full max-w-[420px] h-auto rounded-2xl animate-pulse-grow" />
             </div>
           </div>
         </section>
@@ -268,10 +299,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Left: 3D Coin Image */}
             <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex items-center justify-center">
-              <Image src="/branding/tokenimage.png" alt="Alpha Snap Coin" width={420} height={420} className="w-full max-w-[420px] h-auto rounded-2xl" />
+              <Image src="/branding/tokenimage.png" alt="Alpha Snap Coin" width={420} height={420} className="w-full max-w-[420px] h-auto rounded-2xl animate-pulse-grow" />
             </div>
             {/* Right: About Text */}
-            <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start">
+            <div
+              ref={tokenRef}
+              className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex flex-col justify-center items-start bg-section-gradient"
+            >
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">$ALPHA Token</span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Snap, upload, and get instant crypto insights</h2>
               <p className="text-gray-300 text-lg mb-6">Just snap a screenshot or upload a document, and Alpha Snap will break down the content for you. Instantly understand complex crypto topics, trends, and risks—no matter your experience level.</p>
@@ -347,6 +381,36 @@ export default function Home() {
               <Image src="/branding/singglle.svg" alt="bg" width={244} height={224} style={{ maxWidth: 244, maxHeight: 224 }} />
             </div>
           </div>
+        </div>
+
+        {/* Powered By Section */}
+        <div className="px-4">
+          <section
+            ref={poweredRef}
+            className={`w-full max-w-6xl px-8 py-8 mx-auto my-4 md:p-12 bg-[#181818] rounded-3xl ${poweredVisible ? 'fade-in' : 'opacity-0'}`}
+            style={{
+              backgroundImage: 'url(/branding/1stbg.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            <h2 className="text-2xl font-bold text-white mb-6">Powered by</h2>
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+              <div className="bg-[#111] rounded-2xl flex flex-col items-center justify-center py-6 px-2 md:py-8 md:px-4 shadow-lg border border-[#232323]">
+                <Image src="/branding/poweredchat.png" alt="Chat GPT" width={48} height={48} className="mb-4 md:w-[80px] md:h-[80px] w-[48px] h-[48px]" />
+                <span className="text-white text-lg font-medium text-center">Chat GPT</span>
+              </div>
+              <div className="bg-[#111] rounded-2xl flex flex-col items-center justify-center py-6 px-2 md:py-8 md:px-4 shadow-lg border border-[#232323]">
+                <Image src="/branding/poweredgemini.png" alt="Google Gemini" width={48} height={48} className="mb-4 md:w-[80px] md:h-[80px] w-[48px] h-[48px]" />
+                <span className="text-white text-lg font-medium text-center">Google Gemini</span>
+              </div>
+              <div className="bg-[#111] rounded-2xl flex flex-col items-center justify-center py-6 px-2 md:py-8 md:px-4 shadow-lg border border-[#232323]">
+                <Image src="/branding/poweredsolana.png" alt="Solana" width={48} height={48} className="mb-4 md:w-[80px] md:h-[80px] w-[48px] h-[48px]" />
+                <span className="text-white text-lg font-medium text-center">Solana</span>
+              </div>
+            </div>
+          </section>
         </div>
 
         {/* Footer Section */}

@@ -43,7 +43,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <WalletProvider>
-          <nav className="w-full flex items-center justify-between px-8 py-6 z-10 relative">
+          <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative">
             <Link href="/">
               <Image src="/branding/alphasnap.svg" alt="Snap Anything Logo" width={160} height={32} priority />
             </Link>
