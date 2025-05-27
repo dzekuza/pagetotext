@@ -37,7 +37,7 @@ export default function RootLayout({
         <meta name="twitter:title" content="Alpha Snap – Snap Anything, Get the Alpha" />
         <meta name="twitter:description" content="Understand complex content in seconds" />
         <meta name="twitter:image" content="/branding/alphasoc.png" />
-        <link rel="icon" href="/branding/alphasnap.svg" type="image/svg+xml" />
+        <link rel="icon" href="/branding/Untitled design - 2025-05-27T150239.211.png" type="image/png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -45,7 +45,7 @@ export default function RootLayout({
         <WalletProvider>
           <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative">
             <Link href="/">
-              <Image src="/branding/alphasnap.svg" alt="Snap Anything Logo" width={160} height={32} priority />
+              <Image src="/branding/newlogoalpha.png" alt="Alpha Snap Logo" width={160} height={32} priority />
             </Link>
             {/* Desktop Menu */}
             <div className="flex-1 justify-center hidden md:flex">

@@ -31,6 +31,9 @@ export default function Home() {
   const [caCopied, setCaCopied] = useState(false);
   const comingFeaturesRef = useRef<HTMLDivElement | null>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState<number | null>(null);
+  const [scrollLeft, setScrollLeft] = useState<number>(0);
 
   // Fade-in hooks for major sections
   const [heroRef, heroVisible] = useFadeInOnScroll();
@@ -201,6 +204,22 @@ export default function Home() {
           <div
             ref={comingFeaturesRef}
             className={`flex space-x-4 overflow-x-auto hide-scrollbar${showScrollHint ? ' animate-scroll-hint' : ''}`}
+            style={{ cursor: isDragging ? 'grabbing' : 'grab', userSelect: isDragging ? 'none' : 'auto' }}
+            onMouseDown={e => {
+              if (comingFeaturesRef.current) {
+                setIsDragging(true);
+                setDragStartX(e.pageX - comingFeaturesRef.current.offsetLeft);
+                setScrollLeft(comingFeaturesRef.current.scrollLeft);
+              }
+            }}
+            onMouseLeave={() => setIsDragging(false)}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseMove={e => {
+              if (!isDragging || !comingFeaturesRef.current || dragStartX === null) return;
+              const x = e.pageX - comingFeaturesRef.current.offsetLeft;
+              const walk = (x - dragStartX) * 1.2; // scroll speed
+              comingFeaturesRef.current.scrollLeft = scrollLeft - walk;
+            }}
           >
             {/* Row 1 */}
             <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-6 md:p-12 flex flex-col gap-4 items-start bg-[#181818]">
@@ -379,7 +398,7 @@ export default function Home() {
             </div>
             {/* Right: Illustration */}
             <div className="hidden md:flex flex-col justify-center items-center pr-12 pl-0" style={{ minWidth: 244 }}>
-              <Image src="/branding/singglle.svg" alt="bg" width={244} height={224} style={{ maxWidth: 244, maxHeight: 224 }} />
+              <Image src="/branding/singleeee.png" alt="bg" width={244} height={224} style={{ maxWidth: 244, maxHeight: 224 }} />
             </div>
           </div>
         </div>
@@ -396,7 +415,7 @@ export default function Home() {
               backgroundRepeat: 'no-repeat'
             }}
           >
-            <h2 className="text-2xl font-bold text-white mb-6">Powered by</h2>
+            <h2 className="text-4xl md:text-[2.5rem] font-extrabold mb-8 text-left">Powered by</h2>
             <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               <div className="bg-[#111] rounded-2xl flex flex-col items-center justify-center py-6 px-2 md:py-8 md:px-4 shadow-lg border border-[#232323]">
                 <Image src="/branding/poweredchat.png" alt="Chat GPT" width={48} height={48} className="mb-4 md:w-[80px] md:h-[80px] w-[48px] h-[48px]" />
@@ -420,7 +439,7 @@ export default function Home() {
             {/* Left: Logo, Brand, Tagline, Copyright */}
             <div className="flex flex-col gap-4 items-start flex-1 min-w-0">
               <div className="flex items-center gap-3">
-                <Image src="/branding/alphasnap.svg" alt="AlphaSnap Logo" width={130} height={35} className="w-[130px] h-auto"  />
+                <Image src="/branding/newlogoalpha.png" alt="Alpha Snap Logo" width={130} height={35} className="w-[130px] h-auto"  />
               </div>
               <div className="text-2xl font-semibold text-white">Snap Anything, Get the $ALPHA</div>
               <div className="text-sm text-white/80">© 2025 LinkedNation.</div>
