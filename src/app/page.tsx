@@ -35,8 +35,8 @@ export default function Home() {
   // Fade-in hooks for major sections
   const [heroRef, heroVisible] = useFadeInOnScroll();
   const [featuresRef, featuresVisible] = useFadeInOnScroll();
-  const [missionRef, missionVisible] = useFadeInOnScroll();
-  const [tokenRef, tokenVisible] = useFadeInOnScroll();
+  const [missionRef] = useFadeInOnScroll();
+  const [tokenRef] = useFadeInOnScroll();
   const [poweredRef, poweredVisible] = useFadeInOnScroll();
 
   useEffect(() => {
@@ -63,14 +63,15 @@ export default function Home() {
         setTimeout(() => setShowScrollHint(false), 1200); // Animation duration
       }
     };
+    const ref = comingFeaturesRef.current;
     const observer = new window.IntersectionObserver(handleIntersection, {
       threshold: 0.3,
     });
-    if (comingFeaturesRef.current) {
-      observer.observe(comingFeaturesRef.current);
+    if (ref) {
+      observer.observe(ref);
     }
     return () => {
-      if (comingFeaturesRef.current) observer.unobserve(comingFeaturesRef.current);
+      if (ref) observer.unobserve(ref);
     };
   }, []);
 
@@ -183,7 +184,7 @@ export default function Home() {
             >
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">Our mission</span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-4">Make crypto knowledge accessible, actionable, and instant - for everyone.</h2>
-              <p className="text-gray-300 text-lg">Alpha Snap exists to break down the barriers of complexity in crypto. By turning dense content into clear insights in seconds, we help users to make smarter decisions, move faster, and stay ahead of the curve – whether they're investors, builders, or curious degens.</p>
+              <p className="text-gray-300 text-lg">Alpha Snap exists to break down the barriers of complexity in crypto. By turning dense content into clear insights in seconds, we help users to make smarter decisions, move faster, and stay ahead of the curve – whether they&apos;re investors, builders, or curious degens.</p>
             </div>
             {/* Right: 3D Coin Image */}
             <div className="flex-1 bg-[#181818] rounded-3xl p-8 md:p-12 flex items-center justify-center">
