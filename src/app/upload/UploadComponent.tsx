@@ -51,21 +51,29 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
     newFiles.forEach((uploadFile) => simulateFileUpload(uploadFile.id));
   };
 
-  const handleUrlUpload = () => {
+  const handleUrlUpload = async () => {
     if (!url) return;
-    const newFile: UploadFile = {
-      id: crypto.randomUUID(),
-      file: null,
-      name: url.split("/").pop() || "File from URL",
-      size: 0,
-      progress: 0,
-      status: "uploading",
-      type: "application/octet-stream",
-      url,
-    };
-    setFiles((prev) => [...prev, newFile]);
-    simulateFileUpload(newFile.id);
-    setUrl("");
+    setError(null);
+    try {
+      const apiUrl = `/api/fetch-pdf?url=${encodeURIComponent(url)}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Failed to fetch file from URL.');
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('pdf') && !contentType.startsWith('image/')) {
+        throw new Error('Only PDF and image files are supported for URL upload.');
+      }
+      const blob = await response.blob();
+      const fileName = url.split('/').pop() || 'file.pdf';
+      const file = new File([blob], fileName, { type: contentType });
+      handleFileSelect([file]);
+      setUrl('');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Failed to upload file from URL.');
+      } else {
+        setError('Failed to upload file from URL.');
+      }
+    }
   };
 
   const simulateFileUpload = (fileId: string) => {

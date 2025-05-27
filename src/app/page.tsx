@@ -42,6 +42,12 @@ export default function Home() {
   const [tokenRef] = useFadeInOnScroll();
   const [poweredRef, poweredVisible] = useFadeInOnScroll();
 
+  // Drag-to-scroll for utility section
+  const utilitySliderRef = useRef<HTMLDivElement | null>(null);
+  const [isUtilityDragging, setIsUtilityDragging] = useState(false);
+  const [utilityDragStartX, setUtilityDragStartX] = useState<number | null>(null);
+  const [utilityScrollLeft, setUtilityScrollLeft] = useState<number>(0);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -156,7 +162,7 @@ export default function Home() {
               <div className="mb-2">
                 <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2:</span>Our AI will analyze it</span>
               </div>
-              <p className="text-gray-300">BookReader will take care on the document by carefully analyzing it</p>
+              <p className="text-gray-300">Alpha Snap will take care on the document by carefully analyzing it</p>
             </div>
             {/* Step 3 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
@@ -164,7 +170,7 @@ export default function Home() {
               <div className="mb-2">
                 <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3:</span>Get results</span>
               </div>
-              <p className="text-gray-300">Receive summary of provided document, keywords and argument of passage</p>
+              <p className="text-gray-300">Receive summary of provided document, keywords and argument of the content</p>
             </div>
             {/* Step 4 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
@@ -357,6 +363,102 @@ export default function Home() {
                   CA copied
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Utility Section (from Figma) */}
+        <style jsx global>{`
+          @keyframes utility-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .utility-slider-animate {
+            animation: utility-marquee 20s linear infinite;
+          }
+          .utility-slider-paused {
+            animation-play-state: paused !important;
+          }
+        `}</style>
+        <section id="utility" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
+          <div
+            ref={utilitySliderRef}
+            className="relative overflow-x-auto hide-scrollbar"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              cursor: isUtilityDragging ? 'grabbing' : 'grab',
+              userSelect: isUtilityDragging ? 'none' : 'auto',
+            }}
+            onMouseDown={e => {
+              setIsUtilityDragging(true);
+              setUtilityDragStartX(e.pageX - (utilitySliderRef.current?.offsetLeft || 0));
+              setUtilityScrollLeft(utilitySliderRef.current?.scrollLeft || 0);
+            }}
+            onMouseLeave={() => setIsUtilityDragging(false)}
+            onMouseUp={() => setIsUtilityDragging(false)}
+            onMouseMove={e => {
+              if (!isUtilityDragging || !utilitySliderRef.current || utilityDragStartX === null) return;
+              const x = e.pageX - utilitySliderRef.current.offsetLeft;
+              const walk = (x - utilityDragStartX) * 1.2;
+              utilitySliderRef.current.scrollLeft = utilityScrollLeft - walk;
+            }}
+          >
+            <div
+              className="flex space-x-4 utility-slider-animate"
+              onMouseEnter={e => e.currentTarget.classList.add('utility-slider-paused')}
+              onMouseLeave={e => e.currentTarget.classList.remove('utility-slider-paused')}
+              style={{ willChange: 'transform', minWidth: '200%' }}
+            >
+              {/* Card set 1 */}
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
+                  <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
+                  <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
+                  <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>
+                  <p className="text-white/90 text-lg">Token holders gain access to exclusive community tools, early feature rollouts, and future ecosystem rewards.</p>
+                </div>
+              </div>
+              {/* Card set 2 (duplicate) */}
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
+                  <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
+                  <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
+                  <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
+                </div>
+              </div>
+              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                <div className="flex flex-col gap-2 w-full">
+                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>
+                  <p className="text-white/90 text-lg">Token holders gain access to exclusive community tools, early feature rollouts, and future ecosystem rewards.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
