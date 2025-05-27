@@ -172,33 +172,33 @@ export default function Home() {
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1:</span>Upload image or pdf file</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1:</span>Upload or Snap</span>
               </div>
-              <p className="text-gray-300">Insert image of page&apos;s book or simply drag and drop PDF document</p>
+              <p className="text-gray-300">Upload PDF, or snap screenshots of whitepapers, threads & more.</p>
             </div>
             {/* Step 2 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2:</span>Our AI will analyze it</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2:</span>AI Analysis</span>
               </div>
-              <p className="text-gray-300">Alpha Snap will take care on the document by carefully analyzing it</p>
+              <p className="text-gray-300">Alpha Snap instantly analyzes the content, cutting through the noise.</p>
             </div>
             {/* Step 3 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3:</span>Get results</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3:</span>Get Alpha</span>
               </div>
-              <p className="text-gray-300">Receive summary of provided document, keywords and argument of the content</p>
+              <p className="text-gray-300">Receive clear summaries, key crypto terms, and the core argument.</p>
             </div>
             {/* Step 4 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
               <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4:</span>Ask AI</span>
+                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4:</span>Explore Further</span>
               </div>
-              <p className="text-gray-300">Still need more explanations? Ask chat widget powered by AI for better explanation</p>
+              <p className="text-gray-300">Dive deeper with our AI chat assistant for custom insights.</p>
             </div>
           </div>
         </section>
