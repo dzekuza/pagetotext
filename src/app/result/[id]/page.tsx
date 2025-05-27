@@ -16,6 +16,11 @@ interface ResultData {
   summary: string | null;
   main_argument: string | null;
   keywords: string | string[] | null;
+  keyword1?: string | null;
+  keyword2?: string | null;
+  keyword3?: string | null;
+  keyword4?: string | null;
+  keyword5?: string | null;
   image_url?: string | null;
 }
 
@@ -56,7 +61,7 @@ export default function ResultPage() {
     async function fetchResult() {
       const { data, error } = await supabase
         .from('uploads')
-        .select('summary, main_argument, keywords, image_url')
+        .select('summary, main_argument, keywords, keyword1, keyword2, keyword3, keyword4, keyword5, image_url')
         .eq('id', id)
         .single();
       if (error || !data) {
@@ -71,17 +76,33 @@ export default function ResultPage() {
   // Parse keywords
   const keywords: string[] = useMemo(() => {
     if (!data) return [];
-    if (typeof data.keywords === 'string' && data.keywords.trim().startsWith('[')) {
-      try {
-        const parsed = JSON.parse(data.keywords);
-        if (Array.isArray(parsed) && parsed.every((kw: string) => typeof kw === 'string')) {
-          return parsed;
-        }
-      } catch {}
+    let result: string[] = [];
+    // Parse keywords column (JSON array or comma-separated)
+    if (typeof data.keywords === 'string') {
+      const trimmed = data.keywords.trim();
+      if (trimmed.startsWith('[')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) {
+            result = result.concat((parsed as string[]).filter((kw: string) => typeof kw === 'string'));
+          }
+        } catch {}
+      } else if (trimmed.length > 0) {
+        result = result.concat(trimmed.split(',').map((kw: string) => kw.trim()).filter(Boolean));
+      }
     } else if (Array.isArray(data.keywords)) {
-      return data.keywords.filter((kw: string) => typeof kw === 'string');
+      result = result.concat((data.keywords as string[]).filter((kw: string) => typeof kw === 'string'));
     }
-    return [];
+    // Add keyword1-5 if present
+    for (let i = 1; i <= 5; i++) {
+      const key = `keyword${i}` as keyof ResultData;
+      const value = data[key];
+      if (typeof value === 'string' && value.trim().length > 0) {
+        result.push(value.trim());
+      }
+    }
+    // Remove duplicates
+    return Array.from(new Set(result));
   }, [data]);
 
   // Fetch explanations for all keywords when keywords are available
