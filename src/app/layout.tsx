@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import WalletConnectButton from "../../components/WalletConnectButton";
 import { useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,6 +91,7 @@ export default function RootLayout({
           </nav>
           {children}
         </WalletProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
