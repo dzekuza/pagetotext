@@ -48,6 +48,9 @@ export default function Home() {
   const [utilityDragStartX, setUtilityDragStartX] = useState<number | null>(null);
   const [utilityScrollLeft, setUtilityScrollLeft] = useState<number>(0);
 
+  // Utility section: manage animation state
+  const [utilityPaused, setUtilityPaused] = useState(false);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -99,6 +102,26 @@ export default function Home() {
       // You can add error handling UI here if desired
     }
   };
+
+  // Utility scroll hint animation logic
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting) {
+        setShowScrollHint(true);
+        setTimeout(() => setShowScrollHint(false), 1200);
+      }
+    };
+    const ref = utilitySliderRef.current;
+    const observer = new window.IntersectionObserver(handleIntersection, {
+      threshold: 0.3,
+    });
+    if (ref) {
+      observer.observe(ref);
+    }
+    return () => {
+      if (ref) observer.unobserve(ref);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#111] flex flex-col justify-between p-0" style={{ scrollBehavior: 'smooth' }}>
@@ -369,21 +392,20 @@ export default function Home() {
 
         {/* Utility Section (from Figma) */}
         <style jsx global>{`
-          @keyframes utility-marquee {
+          @keyframes scroll-hint {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            10% { transform: translateX(-40px); }
+            20% { transform: translateX(0); }
+            100% { transform: translateX(0); }
           }
-          .utility-slider-animate {
-            animation: utility-marquee 20s linear infinite;
-          }
-          .utility-slider-paused {
-            animation-play-state: paused !important;
+          .animate-scroll-hint {
+            animation: scroll-hint 1.2s cubic-bezier(0.4,0,0.2,1);
           }
         `}</style>
         <section id="utility" className="w-full max-w-6xl mx-auto my-4 px-4 md:px-0">
           <div
             ref={utilitySliderRef}
-            className="relative overflow-x-auto hide-scrollbar"
+            className={`relative overflow-x-auto hide-scrollbar${showScrollHint ? ' animate-scroll-hint' : ''}`}
             style={{
               WebkitOverflowScrolling: 'touch',
               cursor: isUtilityDragging ? 'grabbing' : 'grab',
@@ -403,12 +425,7 @@ export default function Home() {
               utilitySliderRef.current.scrollLeft = utilityScrollLeft - walk;
             }}
           >
-            <div
-              className="flex space-x-4 utility-slider-animate"
-              onMouseEnter={e => e.currentTarget.classList.add('utility-slider-paused')}
-              onMouseLeave={e => e.currentTarget.classList.remove('utility-slider-paused')}
-              style={{ willChange: 'transform' }}
-            >
+            <div className="flex space-x-4" style={{ willChange: 'transform' }}>
               {/* Stake-to-Unlock */}
               <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
                 <div className="flex flex-col gap-2 w-full">
@@ -557,7 +574,7 @@ export default function Home() {
               </button>
               <h2 className="text-2xl font-bold text-green-300 mb-4">Disclaimer</h2>
               <div className="text-white text-base mb-2">
-                This website and its content are for informational purposes only and do not constitute financial, investment, or legal advice. Always do your own research before making any decisions. Alpha Snap and its creators are not responsible for any actions taken based on the information provided.
+              Alpha Snap is an AI-powered tool designed to help users analyze and understand crypto content more efficiently. It is provided for informational purposes only and does not offer financial, investment, or legal advice. The $ALPHA token is a utility token used to access features within the Alpha Snap platform and does not constitute an investment, security, or guarantee of any returns. Use of the platform and token carries risks, and users should perform their own due diligence and consult qualified professionals before making any financial or investment decisions.
               </div>
             </div>
           </div>
