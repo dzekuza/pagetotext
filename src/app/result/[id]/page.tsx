@@ -164,18 +164,28 @@ export default function ResultPage() {
   return (
     <div className="min-h-screen bg-[#111] flex flex-col p-0 px-4 md:px-16">
       <div className="w-full max-w-6xl mx-auto mt-16 mb-8 px-4">
-        <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div className="w-full flex flex-row items-center justify-between mb-6">
           <button
             type="button"
             onClick={() => router.back()}
-            className="text-gray-300 hover:text-green-300 text-lg inline-block"
+            className="text-gray-300 hover:text-green-300 text-base md:text-lg px-4 py-2 rounded-md"
+            style={{ minWidth: 80 }}
           >
             Back
           </button>
-          <Button className="text-lg py-3 px-6 md:w-auto w-full" onClick={() => setShowUploadModal(true)}>
+          <Button className="text-base md:text-lg px-[20px] py-2 md:px-6 md:py-3 font-bold" onClick={() => setShowUploadModal(true)}>
             Generate another analysis
           </Button>
         </div>
+        <style jsx global>{`
+          @media (max-width: 767px) {
+            .result-generate-btn {
+              font-size: 14px !important;
+              padding-left: 20px !important;
+              padding-right: 20px !important;
+            }
+          }
+        `}</style>
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left: Your upload card */}
           <div
