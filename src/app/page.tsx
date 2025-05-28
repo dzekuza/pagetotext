@@ -171,32 +171,36 @@ export default function Home() {
             {/* Step 1 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
-              <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 1:</span>Upload or Snap</span>
+              <div className="mb-2 flex flex-col items-start">
+                <span className="text-green-300 text-xl font-bold mb-1">Step 1:</span>
+                <span className="text-xl font-bold text-white">Upload or Snap</span>
               </div>
               <p className="text-gray-300">Upload PDF, or snap screenshots of whitepapers, threads & more.</p>
             </div>
             {/* Step 2 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
-              <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 2:</span>AI Analysis</span>
+              <div className="mb-2 flex flex-col items-start">
+                <span className="text-green-300 text-xl font-bold mb-1">Step 2:</span>
+                <span className="text-xl font-bold text-white">AI Analysis</span>
               </div>
               <p className="text-gray-300">Alpha Snap instantly analyzes the content, cutting through the noise.</p>
             </div>
             {/* Step 3 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
-              <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 3:</span>Get Alpha</span>
+              <div className="mb-2 flex flex-col items-start">
+                <span className="text-green-300 text-xl font-bold mb-1">Step 3:</span>
+                <span className="text-xl font-bold text-white">Get Alpha</span>
               </div>
               <p className="text-gray-300">Receive clear summaries, key crypto terms, and the core argument.</p>
             </div>
             {/* Step 4 */}
             <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
               <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
-              <div className="mb-2">
-                <span className="text-xl font-bold"><span className="text-green-300 mr-2">Step 4:</span>Explore Further</span>
+              <div className="mb-2 flex flex-col items-start">
+                <span className="text-green-300 text-xl font-bold mb-1">Step 4:</span>
+                <span className="text-xl font-bold text-white">Explore Further</span>
               </div>
               <p className="text-gray-300">Dive deeper with our AI chat assistant for custom insights.</p>
             </div>
@@ -536,7 +540,7 @@ export default function Home() {
                 <Image src="/branding/newlogoalpha.png" alt="Alpha Snap Logo" width={130} height={35} className="w-[130px] h-auto"  />
               </div>
               <div className="text-2xl font-semibold text-white">Snap Anything, Get the $ALPHA</div>
-              <div className="text-sm text-white/80">© 2025 LinkedNation.</div>
+              <div className="text-sm text-white/80">© 2025 Alpha Snap.</div>
             </div>
             {/* Right: Icons and Disclaimer */}
             <div className="flex flex-col items-end gap-2 footer-mobile-items-start">
