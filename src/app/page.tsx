@@ -28,7 +28,6 @@ export default function Home() {
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const [caCopied, setCaCopied] = useState(false);
   const comingFeaturesRef = useRef<HTMLDivElement | null>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
