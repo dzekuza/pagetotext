@@ -44,9 +44,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <WalletProvider>
-          <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative">
-            <Link href="/">
+          <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative bg-transparent">
+            <Link href="/" className="flex items-center gap-2 text-[#406824]">
               <Image src="/branding/newlogoalpha.png" alt="Alpha Snap Logo" width={160} height={32} priority />
+              <span className="text-xl font-bold text-[#406824]">Alpha Snap</span>
             </Link>
             {/* Desktop Menu */}
             <div className="flex-1 justify-center hidden md:flex">
