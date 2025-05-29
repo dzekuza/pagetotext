@@ -22,6 +22,11 @@ const useFadeInOnScroll = () => {
   return [ref, visible] as const;
 };
 
+// GradientText component for animated gradient headline
+const GradientText = ({ children }: { children: React.ReactNode }) => (
+  <span className="animated-gradient-text">{children}</span>
+);
+
 export default function Home() {
   const [explainingIndex, setExplainingIndex] = useState<number | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
@@ -135,7 +140,9 @@ export default function Home() {
         >
           {/* Left: Headline & Features */}
           <div className="flex-1 max-w-lg text-left">
-            <h1 className="text-5xl font-extrabold leading-tight mb-4 bg-gradient-to-r from-[#95ED7F] via-[#7DDA7D] to-[#FFFFFF] text-transparent bg-clip-text">Snap Anything,<br />Get the Alpha</h1>
+            <h1 className="text-5xl font-extrabold leading-tight mb-4">
+              <GradientText>Snap Anything,<br />Get the Alpha</GradientText>
+            </h1>
             <p className="text-gray-200 text-lg mb-8">Alpha Snap is an AI tool built for the crypto space, helping you understand complex content in seconds. Upload a PDF or screenshot any crypto content - whitepapers, audits, threads, or on-chain data and get instant insights.</p>
             <ul className="space-y-3 mb-2">
               <li className="flex items-center bg-[#181818] rounded-xl px-4 py-3">
@@ -519,7 +526,7 @@ export default function Home() {
                 <a href="https://dexscreener.com/" target="_blank" rel="noopener noreferrer" aria-label="Dexscreener">
                   <Image src="/branding/dex-screener-seeklogo 1.png" alt="Dexscreener" width={24} height={32} className="w-7 h-7" />
                 </a>
-                <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">
+                <a href="https://x.com/AlphaSnapApp" target="_blank" rel="noopener noreferrer" aria-label="X">
                   <Image src="/branding/xloo.png" alt="X" width={20} height={20} className="w-6 h-6" />
                 </a>
               </div>
