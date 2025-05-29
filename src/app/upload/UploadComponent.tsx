@@ -239,7 +239,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
             </div>
           </label>
           <div className="text-center text-sm text-gray-500 my-4">or</div>
-          <div className="flex gap-2 mb-4">
+          <div className="flex flex-col sm:flex-row gap-2 mb-4">
             <input
               type="text"
               value={url}
@@ -249,6 +249,7 @@ export default function UploadComponent({ standalone = true }: UploadComponentPr
             />
             <Button
               onClick={handleUrlUpload}
+              className="w-full sm:w-auto"
             >
               Upload
             </Button>
