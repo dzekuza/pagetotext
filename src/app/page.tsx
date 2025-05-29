@@ -4,6 +4,7 @@ import { supabase } from "./supabaseClient";
 import Image from "next/image";
 import UploadComponent from "./upload/UploadComponent";
 import Button from '../../components/Button';
+import SpotlightCard from '../../components/SpotlightCard';
 
 // Add fade-in animation logic
 const useFadeInOnScroll = () => {
@@ -175,41 +176,49 @@ export default function Home() {
             className={`flex flex-col md:flex-row gap-4 justify-center items-stretch ${featuresVisible ? 'fade-in' : 'opacity-0'}`}
           >
             {/* Step 1 */}
-            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
-              <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
-              <div className="mb-2 flex flex-col items-start">
-                <span className="text-green-300 text-xl font-bold mb-1">Step 1:</span>
-                <span className="text-xl font-bold text-white">Upload or Snap</span>
+            <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="flex-1">
+              <div className="bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+                <Image src="/imagess/UPLOAD FILE.png" alt="Upload" width={64} height={64} className="mb-6" />
+                <div className="mb-2 flex flex-col items-start">
+                  <span className="text-green-300 text-xl font-bold mb-1">Step 1:</span>
+                  <span className="text-xl font-bold text-white">Upload or Snap</span>
+                </div>
+                <p className="text-gray-300">Upload PDF, or snap screenshots of whitepapers, threads & more.</p>
               </div>
-              <p className="text-gray-300">Upload PDF, or snap screenshots of whitepapers, threads & more.</p>
-            </div>
+            </SpotlightCard>
             {/* Step 2 */}
-            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
-              <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
-              <div className="mb-2 flex flex-col items-start">
-                <span className="text-green-300 text-xl font-bold mb-1">Step 2:</span>
-                <span className="text-xl font-bold text-white">AI Analysis</span>
+            <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="flex-1">
+              <div className="bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+                <Image src="/imagess/ANALYZE IMAGE.png" alt="Analyze" width={64} height={64} className="mb-6" />
+                <div className="mb-2 flex flex-col items-start">
+                  <span className="text-green-300 text-xl font-bold mb-1">Step 2:</span>
+                  <span className="text-xl font-bold text-white">AI Analysis</span>
+                </div>
+                <p className="text-gray-300">Alpha Snap instantly analyzes the content, cutting through the noise.</p>
               </div>
-              <p className="text-gray-300">Alpha Snap instantly analyzes the content, cutting through the noise.</p>
-            </div>
+            </SpotlightCard>
             {/* Step 3 */}
-            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
-              <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
-              <div className="mb-2 flex flex-col items-start">
-                <span className="text-green-300 text-xl font-bold mb-1">Step 3:</span>
-                <span className="text-xl font-bold text-white">Get Alpha</span>
+            <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="flex-1">
+              <div className="bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+                <Image src="/imagess/GET RESULTS.png" alt="Results" width={64} height={64} className="mb-6" />
+                <div className="mb-2 flex flex-col items-start">
+                  <span className="text-green-300 text-xl font-bold mb-1">Step 3:</span>
+                  <span className="text-xl font-bold text-white">Get Alpha</span>
+                </div>
+                <p className="text-gray-300">Receive clear summaries, key crypto terms, and the core argument.</p>
               </div>
-              <p className="text-gray-300">Receive clear summaries, key crypto terms, and the core argument.</p>
-            </div>
+            </SpotlightCard>
             {/* Step 4 */}
-            <div className="flex-1 bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
-              <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
-              <div className="mb-2 flex flex-col items-start">
-                <span className="text-green-300 text-xl font-bold mb-1">Step 4:</span>
-                <span className="text-xl font-bold text-white">Explore Further</span>
+            <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="flex-1">
+              <div className="bg-[#181818] rounded-2xl p-8 flex flex-col items-start shadow-lg">
+                <Image src="/branding/A_flat_digital_vector_illustration_features_an_ico Background Removed.png" alt="Ask AI" width={64} height={64} className="mb-6" />
+                <div className="mb-2 flex flex-col items-start">
+                  <span className="text-green-300 text-xl font-bold mb-1">Step 4:</span>
+                  <span className="text-xl font-bold text-white">Explore Further</span>
+                </div>
+                <p className="text-gray-300">Dive deeper with our AI chat assistant for custom insights.</p>
               </div>
-              <p className="text-gray-300">Dive deeper with our AI chat assistant for custom insights.</p>
-            </div>
+            </SpotlightCard>
           </div>
         </section>
 
@@ -406,33 +415,41 @@ export default function Home() {
           >
             <div className="flex space-x-4" style={{ willChange: 'transform' }}>
               {/* Stake-to-Unlock */}
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
-                  <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
+              <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto">
+                <div className="rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                  <div className="flex flex-col gap-2 w-full">
+                    <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Stake-to-Unlock</span>
+                    <p className="text-white/90 text-lg">Stake $ALPHA to access all core features of Alpha Snap, including unlimited content analysis, and full AI chat support.</p>
+                  </div>
                 </div>
-              </div>
+              </SpotlightCard>
               {/* Pay-as-You-Go Credits */}
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
-                  <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
+              <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto">
+                <div className="rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                  <div className="flex flex-col gap-2 w-full">
+                    <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Pay-as-You-Go Credits</span>
+                    <p className="text-white/90 text-lg">Use $ALPHA to buy credits for individual tasks — like summarizing large audits, scanning complex documents, generating deep-dive reports, or accessing Alpha Snap via API.</p>
+                  </div>
                 </div>
-              </div>
+              </SpotlightCard>
               {/* Contribute-to-Earn */}
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
-                  <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
+              <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto">
+                <div className="rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                  <div className="flex flex-col gap-2 w-full">
+                    <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Contribute-to-Earn</span>
+                    <p className="text-white/90 text-lg">Earn $ALPHA by helping improve the platform: tagging narratives, flagging risks, submitting training data, or suggesting improvements to AI output.</p>
+                  </div>
                 </div>
-              </div>
+              </SpotlightCard>
               {/* Community Access & Rewards */}
-              <div className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
-                <div className="flex flex-col gap-2 w-full">
-                  <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>
-                  <p className="text-white/90 text-lg">Token holders gain access to exclusive community tools, early feature rollouts, and future ecosystem rewards.</p>
+              <SpotlightCard spotlightColor="rgba(149, 237, 127, 0.25)" className="w-[95vw] min-w-[320px] sm:min-w-[480px] sm:w-auto">
+                <div className="rounded-3xl p-12 flex flex-col gap-4 items-start bg-[#181818]" style={{ borderRadius: 24 }}>
+                  <div className="flex flex-col gap-2 w-full">
+                    <span className="text-2xl font-semibold bg-gradient-to-r from-[#136B0A] via-[#7DDA7D] to-[#058B05] text-transparent bg-clip-text">Community Access & Rewards</span>
+                    <p className="text-white/90 text-lg">Token holders gain access to exclusive community tools, early feature rollouts, and future ecosystem rewards.</p>
+                  </div>
                 </div>
-              </div>
+              </SpotlightCard>
             </div>
           </div>
         </section>

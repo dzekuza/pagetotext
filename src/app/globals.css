@@ -104,3 +104,14 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
   -webkit-text-fill-color: transparent;
   animation: gradient-move 2s linear infinite alternate;
 }
+
+/* SpotlightCard animated background */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.spotlight-card #spotlight-bg {
+  transition: opacity 0.4s, background 0.4s;
+  will-change: background;
+}

@@ -8,6 +8,8 @@ import Link from "next/link";
 import WalletConnectButton from "../../components/WalletConnectButton";
 import { useState } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import GooeyNav from '../../components/GooeyNav';
+import '../../components/GooeyNav.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,18 +46,26 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <WalletProvider>
-          <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative bg-transparent">
+          <nav className="w-full flex items-center justify-between px-4 md:px-8 py-6 z-10 relative bg-[#111]">
             <Link href="/" className="flex items-center gap-2 text-[#406824]">
               <Image src="/branding/newlogoalpha.png" alt="Alpha Snap Logo" width={160} height={32} priority />
             </Link>
-            {/* Desktop Menu */}
-            <div className="flex-1 justify-center hidden md:flex">
-              <div className="flex items-center gap-6">
-                <a href="#features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }}>How it works</a>
-                <a href="#mission" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' }); }}>Our mission</a>
-                <a href="#coming-features" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('coming-features')?.scrollIntoView({ behavior: 'smooth' }); }}>Upcoming features</a>
-                <a href="#token" className="text-white text-sm font-semibold hover:text-green-300 transition-colors" onClick={e => { e.preventDefault(); document.getElementById('token')?.scrollIntoView({ behavior: 'smooth' }); }}>$ALPHA</a>
-              </div>
+            <div className="flex-1 flex justify-center">
+              <GooeyNav
+                items={[
+                  { label: 'How it works', href: '#features' },
+                  { label: 'Our mission', href: '#mission' },
+                  { label: 'Upcoming features', href: '#coming-features' },
+                  { label: '$ALPHA', href: '#token' },
+                ]}
+                particleCount={15}
+                particleDistances={[90, 10]}
+                particleR={100}
+                initialActiveIndex={0}
+                animationTime={600}
+                timeVariance={300}
+                colors={[1, 2, 3, 1, 2, 3, 1, 4]}
+              />
             </div>
             <div className="flex items-center gap-3">
               <WalletConnectButton />
