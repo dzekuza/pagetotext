@@ -89,3 +89,18 @@ a:hover, [role="link"], .cursor-pointer, .hover\:underline:hover, .hover\:text-g
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(90deg, #7AC761 0%, #FFF 57%, #406824 100%);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-move 2s linear infinite alternate;
+}
