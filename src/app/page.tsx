@@ -359,34 +359,6 @@ export default function Home() {
               <span className="inline-block bg-white text-[#111] text-xs font-bold rounded px-4 py-1 w-max shadow mb-6">$ALPHA Token</span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Seamless Access, Flexible Payments, Community Powered.</h2>
               <p className="text-gray-300 text-lg mb-6">The $ALPHA token plays a central role in the Alpha Snap platform, enabling access to features, payment for services, and community participation.</p>
-              {/* Contract Address Box */}
-              <div className="flex items-center gap-3 bg-[#232323] rounded-xl px-5 py-4 mt-2 select-all group relative w-full max-w-[420px]">
-                <span className="text-xs font-bold text-white bg-[#181818] rounded px-3 py-1 mr-2">CA</span>
-                <span className="font-mono text-white text-base truncate flex-1" id="ca-address">25Ew9oMprcypdK2KbecFE6Btvy5HChaDYUmLdm7aLinK</span>
-                <button
-                  onClick={() => {
-                    const addr = document.getElementById('ca-address')?.textContent;
-                    if (addr) {
-                      navigator.clipboard.writeText(addr);
-                      setCaCopied(true);
-                      setTimeout(() => setCaCopied(false), 3000);
-                    }
-                  }}
-                  id="ca-copy-btn"
-                  className="text-gray-400 hover:text-green-400 transition-colors p-1"
-                  title="Copy address"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all">
-                    <path d="M8 4v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7.242c0-.53-.21-1.039-.586-1.414l-1.242-1.242A2 2 0 0 0 16.758 4H10c-1.1 0-2 .9-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 18v2c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-              {caCopied && (
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-[-2.2rem] bg-green-700 text-white text-xs font-semibold rounded px-4 py-2 shadow z-20 animate-fade-in-out">
-                  CA copied
-                </div>
-              )}
             </div>
           </div>
         </section>
